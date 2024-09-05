@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated />
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ee2b07ac-1c24-48cf-abe4-ace6eb378c1c" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ExportToHTMLSettings">
+    <option name="printScope" value="1" />
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/exportToHTML" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2021" />
+    <option name="minorVersion" value="3.2" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="23scBLsaxukwpdL0JLBcRLrBT4Q" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "C/C++ File.main.cpp.executor": "Run",
+    "CMake Application.Pong.executor": "Run",
+    "CMake Application.Pong_S_S.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "full.screen.before.presentation.mode": "false",
+    "last_opened_file_path": "C:/Users/Marco/Desktop/Informatica/Cronologia pong/Lavoro/Pong 3.3.2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "configurable.tailwindcss",
+    "structure.view.defaults.are.configured": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="main.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Pong" TARGET_NAME="main.cpp" CONFIG_NAME="main.cpp">
+      <option name="sourceFile" value="main.cpp" />
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.runfile.CppFileBuildBeforeRunTaskProvider$BasicBuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ee2b07ac-1c24-48cf-abe4-ace6eb378c1c" name="Changes" comment="" />
+      <created>1642526099389</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1642526099389</updated>
+      <workItem from="1642526101458" duration="5881000" />
+      <workItem from="1642579813298" duration="2680000" />
+      <workItem from="1642583391565" duration="16000" />
+      <workItem from="1642583427050" duration="987000" />
+      <workItem from="1706459320365" duration="173000" />
+      <workItem from="1706459532307" duration="22000" />
+      <workItem from="1707078913785" duration="122000" />
+      <workItem from="1707234307113" duration="4994000" />
+      <workItem from="1707239483374" duration="33000" />
+      <workItem from="1707239620186" duration="3290000" />
+      <workItem from="1707243998263" duration="590000" />
+      <workItem from="1707245322600" duration="1063000" />
+      <workItem from="1707316750590" duration="535000" />
+      <workItem from="1707317849116" duration="1924000" />
+      <workItem from="1707548445316" duration="1195000" />
+      <workItem from="1707549659191" duration="2063000" />
+      <workItem from="1707551871139" duration="406000" />
+      <workItem from="1707552310363" duration="321000" />
+      <workItem from="1707552695641" duration="534000" />
+      <workItem from="1707553304107" duration="399000" />
+      <workItem from="1707554008238" duration="7000" />
+      <workItem from="1707554193083" duration="445000" />
+      <workItem from="1707554649210" duration="209000" />
+      <workItem from="1707570801929" duration="9208000" />
+      <workItem from="1707645506256" duration="26000" />
+      <workItem from="1707647240861" duration="6501000" />
+      <workItem from="1707676965976" duration="1203000" />
+      <workItem from="1707749886139" duration="1941000" />
+      <workItem from="1707752064378" duration="1865000" />
+      <workItem from="1707754473838" duration="350000" />
+      <workItem from="1707908183589" duration="578000" />
+      <workItem from="1707921058002" duration="56000" />
+      <workItem from="1708179158054" duration="406000" />
+      <workItem from="1708871119398" duration="1689000" />
+      <workItem from="1708879414590" duration="5110000" />
+      <workItem from="1709362422880" duration="196000" />
+      <workItem from="1709362637051" duration="164000" />
+      <workItem from="1709362851996" duration="435000" />
+      <workItem from="1709363436826" duration="182000" />
+      <workItem from="1709363657770" duration="82000" />
+      <workItem from="1709363753913" duration="3762000" />
+      <workItem from="1709367577187" duration="91000" />
+      <workItem from="1709460651815" duration="2079000" />
+      <workItem from="1709462779984" duration="142000" />
+      <workItem from="1710665506268" duration="319000" />
+      <workItem from="1710666634754" duration="4182000" />
+      <workItem from="1710873797110" duration="140000" />
+      <workItem from="1710874532231" duration="31000" />
+      <workItem from="1711176938079" duration="1092000" />
+      <workItem from="1711181419878" duration="1351000" />
+      <workItem from="1711791903758" duration="420000" />
+      <workItem from="1711792385661" duration="6300000" />
+      <workItem from="1711806973725" duration="835000" />
+      <workItem from="1711807825675" duration="3085000" />
+      <workItem from="1711819792374" duration="595000" />
+      <workItem from="1712052040336" duration="703000" />
+      <workItem from="1712260112133" duration="215000" />
+      <workItem from="1712260347686" duration="2233000" />
+      <workItem from="1712324825682" duration="3644000" />
+      <workItem from="1712347664039" duration="2416000" />
+      <workItem from="1712382894799" duration="664000" />
+      <workItem from="1712389397758" duration="423000" />
+      <workItem from="1712653274537" duration="20000" />
+      <workItem from="1712655606829" duration="22000" />
+      <workItem from="1712988914805" duration="9000" />
+      <workItem from="1712989062129" duration="41000" />
+      <workItem from="1712989120673" duration="14000" />
+      <workItem from="1712989166718" duration="1150000" />
+      <workItem from="1712991072813" duration="184000" />
+      <workItem from="1712991269221" duration="66000" />
+      <workItem from="1712991343134" duration="3037000" />
+      <workItem from="1713013483459" duration="5810000" />
+      <workItem from="1713023293175" duration="701000" />
+      <workItem from="1713077460431" duration="4000" />
+      <workItem from="1713077492256" duration="44000" />
+      <workItem from="1713077746891" duration="3230000" />
+      <workItem from="1713105717627" duration="4721000" />
+      <workItem from="1713110584237" duration="1092000" />
+      <workItem from="1713113182615" duration="1920000" />
+      <workItem from="1713187849801" duration="70000" />
+      <workItem from="1713340293732" duration="16000" />
+      <workItem from="1713454994345" duration="24000" />
+      <workItem from="1713520795312" duration="138000" />
+      <workItem from="1713521020797" duration="1000" />
+      <workItem from="1713521213817" duration="42000" />
+      <workItem from="1713521503819" duration="27000" />
+      <workItem from="1713521562168" duration="3293000" />
+      <workItem from="1713539226272" duration="650000" />
+      <workItem from="1713619058337" duration="1978000" />
+      <workItem from="1713689945431" duration="127000" />
+      <workItem from="1714545868052" duration="1119000" />
+      <workItem from="1714547063384" duration="223000" />
+      <workItem from="1714547388627" duration="2000" />
+      <workItem from="1714892893790" duration="5100000" />
+      <workItem from="1714914350457" duration="1199000" />
+      <workItem from="1714926448394" duration="287000" />
+      <workItem from="1716575677481" duration="275000" />
+      <workItem from="1716637441424" duration="4272000" />
+      <workItem from="1716643296560" duration="20000" />
+      <workItem from="1716818139057" duration="16000" />
+      <workItem from="1716818174276" duration="13000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticReloadCMake value="true" />
+  </component>
+</project>

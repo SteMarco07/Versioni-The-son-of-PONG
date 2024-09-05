@@ -1,0 +1,3 @@
+C:/Users/Marco/Desktop/Informatica/Vacanze/Pong/Pre_versioni/Pong 0.4.1/cmake-build-debug/CMakeFiles/Pong.dir
+C:/Users/Marco/Desktop/Informatica/Vacanze/Pong/Pre_versioni/Pong 0.4.1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Marco/Desktop/Informatica/Vacanze/Pong/Pre_versioni/Pong 0.4.1/cmake-build-debug/CMakeFiles/rebuild_cache.dir

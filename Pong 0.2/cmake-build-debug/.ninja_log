@@ -1,0 +1,8 @@
+# ninja log v5
+1	155	7287821153788044	build.ninja	2efd10f35edbc344
+0	12	0	clean	ef8842113fecf3f6
+502	798	7281625828041215	raylib_template_portable_windows.exe	c49116bec7bea0d5
+420	681	7281627395030710	Pong_S_S.exe	42f866ff456b50c1
+0	415	7281627392330531	CMakeFiles/Pong_S_S.dir/main.cpp.obj	c431a4ac305e98bc
+1	329	7287821380417152	CMakeFiles/Pong_S_S.dir/main.cpp.obj	8076a0c908e07dcd
+331	497	7287821382135885	Pong_S_S.exe	18d8d307c5262381
