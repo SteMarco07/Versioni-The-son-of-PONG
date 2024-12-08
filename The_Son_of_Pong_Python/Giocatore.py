@@ -1,0 +1,40 @@
+from pyray import *
+from raylib import *
+
+from Messaggio import scrivi_messaggio
+
+
+class Giocatore:
+
+    def __init__(self, barretta, nome):
+        self.__barretta = barretta
+        self.__punteggio = 0
+        self.__nome = nome
+
+    def reset(self):
+        self.__barretta.set_y((get_screen_height()-self.__barretta.get_h())/2)
+        self.__punteggio = 0
+
+    def aggiungi_punto(self, fine_partita, ID):
+        if not fine_partita:
+            scrivi_messaggio("Punto del giocatore " + str(ID + 1), 40)
+        self.__punteggio += 1
+
+    def disegna_punteggio(self, screen_width):
+        draw_text(str(self.__punteggio), screen_width/5,20, 30,BLACK)
+
+    def get_punteggio(self):
+        return self.__punteggio
+
+    def aggiorna_barretta(self, n_giocatore):
+        if n_giocatore == 1:
+            self.__barretta.aggiorna_y(get_screen_height(), KEY_W, KEY_S)
+        elif n_giocatore == 2:
+            self.__barretta.aggiorna_y(get_screen_height(), KEY_UP, KEY_DOWN)
+
+    def get_barretta(self):
+        return self.__barretta
+
+    def disegna(self, x,y):
+        self.__barretta.disegna()
+        draw_text(str(self.__punteggio), int(x),int(y), 30,WHITE)
