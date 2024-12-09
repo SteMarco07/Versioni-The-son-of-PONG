@@ -12,7 +12,7 @@ class Gioco:
         #2) pausa come interruzione del giocatore
         #3) pausa dovuta a un giocatore che segna un punto
         #4) vittoria
-        #5) menu vari che aggiungeremo prima o poi
+        #5) menu vari che aggiungeremo [prima o poi]
 
     def aggiorna_giocatori(self):
         self.__giocatori[0].aggiorna_barretta(1)
@@ -25,7 +25,7 @@ class Gioco:
         self.__pallina.aggiorna_x(barretta1, barretta2)
 
     def aggiungi_punto(self, indice):
-        self.__giocatori[indice].aggiungi_punto(indice)
+        self.__giocatori[indice].aggiungi_punto()
 
     def aggiorna(self):
         self.aggiorna_giocatori()
@@ -51,6 +51,11 @@ class Gioco:
 
     def set_stato(self, stato):
         self.__stato = stato
+        if stato == 1:
+            self.riprendi("partita")
+        elif stato == 2 or stato == 3:
+            self.metti_in_pausa("partita")
+
 
     def disegna_fine_partita(self, punteggio_fine_partita):
         if self.__giocatori[0].get_punteggio() == punteggio_fine_partita:
@@ -59,14 +64,7 @@ class Gioco:
         elif self.__giocatori[1].get_punteggio() == punteggio_fine_partita:
             scrivi_messaggio("IL GIOCATORE 2 HA VINTO", 40)
 
-    def get_punteggio_giocatore(self, indice):
-        return self.__giocatori[indice].get_punteggio()
 
-    def get_vincitore(self):
-        if self.__giocatori[0].get_punteggio() > self.__giocatori[1].get_punteggio():
-            return 0
-        else:
-            return 1
 
     def disegna(self):
         for i in range(0,get_screen_height(),80):
@@ -78,26 +76,37 @@ class Gioco:
         self.__giocatori[1].disegna(get_screen_width()*0.75,50)
 
     def carica_musica(self):
-        self.__musica = [load_sound('assets/chill.mp3'.encode('utf-8')),
-                         load_sound('assets/partita.mp3'.encode('utf-8')),
-                         load_sound('assets/vittoria.mp3'.encode('utf-8'))]
+        self.__musiche = {
+            "chill" : load_sound('assets/chill.mp3'.encode('utf-8')),
+            "partita" : load_sound('assets/partita.mp3'.encode('utf-8')),
+            "vittoria" : load_sound('assets/vittoria.mp3'.encode('utf-8'))
+        }
 
     def __gestisci_musiche(self, target):
-        for OST in self.__musica:
-            if is_sound_playing(OST) and OST != target:
+        for key, OST in self.__musiche.items():
+            if is_sound_playing(OST) and key != target:
                 stop_sound(OST)
-        if not is_sound_playing(target):
-            play_sound(target)
+        if not is_sound_playing(self.__musiche[target]) and self.__stato != 2 and self.__stato != 3:
+            play_sound(self.__musiche[target])
+
+    def qualcuno_sta_per_vincere(self, chi, PUNTI_FINALI):
+        if self.__giocatori[chi].sta_per_vincere(PUNTI_FINALI):
+            return chi
+        else:
+            return -1
 
     def riproduci_musica(self):
-        target = Sound
-        if self.__stato == 0: #play chill
-            target = self.__musica[0] #seleziona chill
-        if self.__stato != 4:
-            target = self.__musica[1]
+        if self.__stato == 0:
+            target = "chill"
+        elif self.__stato != 4:
+            target = "partita"
         else:
-            target = self.__musica[2]
+            target = "vittoria"
         self.__gestisci_musiche(target)
 
-    def disegna_pausa(self):
-        scrivi_messaggio("IL GIOCO E' IN PAUSA",40)
+    def metti_in_pausa(self, key):
+        pause_sound(self.__musiche[key])
+
+
+    def riprendi(self, key):
+        resume_sound(self.__musiche[key])

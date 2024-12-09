@@ -18,6 +18,7 @@ LARGHEZZA_BARRETTA = 20
 ALTEZZA_BARRETTA = 200
 
 rimbalzo = load_sound('assets/rimbalzo.wav'.encode('utf-8'))
+punto = load_sound('assets/punto.mp3'.encode('utf-8'))
 
 barretta1 = Barretta.Barretta(LARGHEZZA_BARRETTA,200, LARGHEZZA_BARRETTA, ALTEZZA_BARRETTA, 10, WHITE)
 barretta2 = Barretta.Barretta(1920 - LARGHEZZA_BARRETTA - 20,200, LARGHEZZA_BARRETTA, ALTEZZA_BARRETTA, 10, WHITE)
@@ -27,7 +28,7 @@ g2 = Giocatore.Giocatore(barretta2,"G2")
 
 gioco = Gioco.Gioco(g1,g2,pallina)
 
-PUNTI_FINALI = 3
+PUNTI_FINALI = 2
 
 set_target_fps(60)
 init_window(0, 0, "test")
@@ -61,29 +62,29 @@ while not window_should_close():
                 gioco.set_stato(2)
             if gioco.controlla_pallina() != -1:
                 gioco.set_stato(3)
+                play_sound(punto)
 
         case 2: #pausa dal giocatore
-            gioco.disegna_pausa()
+            scrivi_messaggio("Il gioco e' in pausa", 40)
             if is_key_pressed(KEY_P):
                 gioco.set_stato(1)
 
         case 3: #pausa da uno che fa punto
             chi = (gioco.controlla_pallina())
-            scrivi_messaggio("Punto del Giocatore " + str(chi + 1) + '!', 50)
-            if gioco.get_punteggio_giocatore(0) + 1 < PUNTI_FINALI and gioco.get_punteggio_giocatore(1) + 1 < PUNTI_FINALI:
+            if gioco.qualcuno_sta_per_vincere(chi,PUNTI_FINALI) == -1:
+                scrivi_messaggio("Punto del Giocatore " + str(chi + 1) + '!', 50)
                 if is_key_pressed(KEY_SPACE):
-                    gioco.reset_pallina()
-                    gioco.controlla_pallina()
-                    gioco.aggiungi_punto(chi)
                     gioco.set_stato(1)
+                    gioco.aggiungi_punto(chi)
+                    gioco.reset_pallina()
             else:
-                chi = gioco.get_vincitore()
                 gioco.set_stato(4)
 
         case 4: #vittoria di uno dei due giocatori
-            scrivi_messaggio("VITTORIA DEL GI0CATORE " + str(chi + 1) + '!', 50)
+            scrivi_messaggio("VITTORIA DEL GI0CATORE " + str(chi + 1) + '!\nPremi "R" Per resettare', 50)
             gioco.reset_pallina()
-
+            if is_key_pressed(KEY_R):
+                gioco.reset()
 
     begin_drawing()
     clear_background(BLACK)

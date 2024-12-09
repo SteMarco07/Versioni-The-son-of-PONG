@@ -15,10 +15,11 @@ class Giocatore:
         self.__barretta.set_y((get_screen_height()-self.__barretta.get_h())/2)
         self.__punteggio = 0
 
-    def aggiungi_punto(self, quale):
-
-     scrivi_messaggio("Punto del giocatore " + str(quale + 1), 40)
+    def aggiungi_punto(self):
      self.__punteggio += 1
+
+    def sta_per_vincere(self, PUNTI_FINALI):
+        return self.__punteggio == PUNTI_FINALI - 1
 
     def disegna_punteggio(self, screen_width):
         draw_text(str(self.__punteggio), screen_width/5,20, 30,BLACK)
@@ -36,5 +37,7 @@ class Giocatore:
         return self.__barretta
 
     def disegna(self, x,y):
+        x = int(x)
+        y = int(y)
         self.__barretta.disegna()
         draw_text(str(self.__punteggio), int(x),int(y), 30,WHITE)
