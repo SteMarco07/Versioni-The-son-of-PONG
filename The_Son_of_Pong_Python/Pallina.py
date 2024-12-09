@@ -3,7 +3,7 @@ import math
 from pyray import *
 import random
 
-from Messaggio import scrivi_messaggio
+from Funzioni_Varie import scrivi_messaggio
 
 class Pallina:
 

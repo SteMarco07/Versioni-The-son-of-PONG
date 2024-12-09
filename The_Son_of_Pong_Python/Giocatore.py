@@ -1,7 +1,7 @@
 from pyray import *
 from raylib import *
 
-from Messaggio import scrivi_messaggio
+from Funzioni_Varie import scrivi_messaggio
 
 
 class Giocatore:
@@ -15,10 +15,10 @@ class Giocatore:
         self.__barretta.set_y((get_screen_height()-self.__barretta.get_h())/2)
         self.__punteggio = 0
 
-    def aggiungi_punto(self, fine_partita, ID):
-        if not fine_partita:
-            scrivi_messaggio("Punto del giocatore " + str(ID + 1), 40)
-        self.__punteggio += 1
+    def aggiungi_punto(self, quale):
+
+     scrivi_messaggio("Punto del giocatore " + str(quale + 1), 40)
+     self.__punteggio += 1
 
     def disegna_punteggio(self, screen_width):
         draw_text(str(self.__punteggio), screen_width/5,20, 30,BLACK)
