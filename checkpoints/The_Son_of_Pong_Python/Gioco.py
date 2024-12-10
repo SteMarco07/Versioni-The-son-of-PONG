@@ -4,6 +4,8 @@ from Funzioni_Varie import scrivi_messaggio
 
 class Gioco:
     def __init__(self, g1, g2, pallina):
+        self.__fatto_una_volta = None
+        self.__musiche = None
         self.__giocatori = [g1,g2]
         self.__pallina = pallina
         self.__stato = 0
@@ -79,14 +81,16 @@ class Gioco:
         self.__musiche = {
             "chill" : load_sound('assets/chill.mp3'.encode('utf-8')),
             "partita" : load_sound('assets/partita.mp3'.encode('utf-8')),
-            "vittoria" : load_sound('assets/vittoria.mp3'.encode('utf-8'))
+            "vittoria" : load_sound('assets/vittoria.mp3'.encode('utf-8')),
+            "punto" : load_sound('assets/punto.mp3'.encode('utf-8'))
+
         }
 
     def __gestisci_musiche(self, target):
         for key, OST in self.__musiche.items():
             if is_sound_playing(OST) and key != target:
                 stop_sound(OST)
-        if not is_sound_playing(self.__musiche[target]) and self.__stato != 2 and self.__stato != 3:
+        if not is_sound_playing(self.__musiche[target]):
             play_sound(self.__musiche[target])
 
     def qualcuno_sta_per_vincere(self, chi, PUNTI_FINALI):
@@ -96,13 +100,15 @@ class Gioco:
             return -1
 
     def riproduci_musica(self):
-        if self.__stato == 0:
-            target = "chill"
-        elif self.__stato != 4:
-            target = "partita"
-        else:
-            target = "vittoria"
-        self.__gestisci_musiche(target)
+        if self.__stato != 2 and self.__stato != 3:
+            if self.__stato == 0:
+                target = "chill"
+            elif self.__stato == 1:
+                target = "partita"
+                self.__fatto_una_volta = False
+            else:
+                target = "vittoria"
+            self.__gestisci_musiche(target)
 
     def metti_in_pausa(self, key):
         pause_sound(self.__musiche[key])

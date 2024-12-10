@@ -1,7 +1,7 @@
 from pyray import *
 from raylib import *
 
-#from TheSonofPong import *
+
 import Barretta
 import Pallina
 import Giocatore
@@ -43,15 +43,12 @@ while not window_should_close():
     gioco.riproduci_musica()
     stato = gioco.get_stato()
 
-    if is_key_pressed(KEY_H):
-        play_sound(rimbalzo)
-
     if stato == 1 or stato == 2:
         gioco.disegna()
 
     match stato:
         case 0: #si deve ancora selezionare la partita
-            scrivi_messaggio("Premere SPAZIO per iniziare la partita", 50)
+            scrivi_messaggio('Premere "SPAZIO" per iniziare la partita', 50)
             if is_key_pressed(KEY_SPACE):
                 gioco.reset_pallina()
                 gioco.set_stato(1)
@@ -71,17 +68,19 @@ while not window_should_close():
 
         case 3: #pausa da uno che fa punto
             chi = (gioco.controlla_pallina())
+
             if gioco.qualcuno_sta_per_vincere(chi,PUNTI_FINALI) == -1:
-                scrivi_messaggio("Punto del Giocatore " + str(chi + 1) + '!', 50)
+                scrivi_messaggio("\t\t\tPunto del Giocatore " + str(chi + 1) + '!\nPremi "SPAZIO" per continuare', 50)
                 if is_key_pressed(KEY_SPACE):
                     gioco.set_stato(1)
-                    gioco.aggiungi_punto(chi)
                     gioco.reset_pallina()
+                    gioco.aggiungi_punto(chi)
+
             else:
                 gioco.set_stato(4)
 
         case 4: #vittoria di uno dei due giocatori
-            scrivi_messaggio("VITTORIA DEL GI0CATORE " + str(chi + 1) + '!\nPremi "R" Per resettare', 50)
+            scrivi_messaggio("VITTORIA DEL GI0CATORE " + str(chi + 1) + '!\n\t\tPremi "R" per resettare', 50)
             gioco.reset_pallina()
             if is_key_pressed(KEY_R):
                 gioco.reset()
