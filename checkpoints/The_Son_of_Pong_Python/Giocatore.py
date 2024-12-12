@@ -1,5 +1,7 @@
-from pyray import *
+
 from raylib import *
+import mediapipe.python.solutions.hands as mp_hands
+from pyray import *
 
 from Funzioni_Varie import scrivi_messaggio
 
@@ -27,11 +29,9 @@ class Giocatore:
     def get_punteggio(self):
         return self.__punteggio
 
-    def aggiorna_barretta(self, n_giocatore):
-        if n_giocatore == 1:
-            self.__barretta.aggiorna_y(get_screen_height(), KEY_W, KEY_S)
-        elif n_giocatore == 2:
-            self.__barretta.aggiorna_y(get_screen_height(), KEY_UP, KEY_DOWN)
+    def aggiorna_barretta(self, pos_y):
+        self.__barretta.set_y(pos_y)
+
 
     def get_barretta(self):
         return self.__barretta

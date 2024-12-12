@@ -1,4 +1,6 @@
 from pyray import *
+import cv2 as cv
+import mediapipe.python.solutions.hands as mp_hands
 
 class Barretta:
     def __init__(self, x,y,l,h,v,colore):
@@ -31,13 +33,6 @@ class Barretta:
 
     def get_rettangolo(self):
         return self.__rec
-
-    def aggiorna_y(self, screen_height, tasto_sali, tasto_scendi):
-        y = self.__rec["y"]
-        if is_key_down(tasto_sali) and y >= 0:
-            self.__rec["y"] -= self.__v
-        elif is_key_down(tasto_scendi) and y + self.__rec["h"] <= screen_height:
-            self.__rec["y"] += self.__v
 
     def disegna(self):
         x = int(self.__rec["x"])

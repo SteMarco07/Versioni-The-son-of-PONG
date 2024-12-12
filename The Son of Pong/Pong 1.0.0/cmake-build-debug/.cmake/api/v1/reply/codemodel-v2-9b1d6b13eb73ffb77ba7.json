@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Pong::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Pong-Debug-2d9ce1810387bcf04a19.json",
+					"jsonFile" : "target-Pong-Debug-11ada4fdd4882addf5ec.json",
 					"name" : "Pong",
 					"projectIndex" : 0
 				}
@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/Marco/Desktop/Informatica/Vacanze/Pong/Verzione_finale/Pong 1.0.0/cmake-build-debug",
-		"source" : "C:/Users/Marco/Desktop/Informatica/Vacanze/Pong/Verzione_finale/Pong 1.0.0"
+		"build" : "C:/Users/Marco/Desktop/Informatica/Progetti/Versioni-The-son-of-PONG/The Son of Pong/Pong 1.0.0/cmake-build-debug",
+		"source" : "C:/Users/Marco/Desktop/Informatica/Progetti/Versioni-The-son-of-PONG/The Son of Pong/Pong 1.0.0"
 	},
 	"version" : 
 	{

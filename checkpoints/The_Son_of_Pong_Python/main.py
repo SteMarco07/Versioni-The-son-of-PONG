@@ -17,8 +17,8 @@ pallina = Pallina.Pallina(0,0, 10, 7, -3, 3, WHITE, LoadSound('assets/rimbalzo.w
 LARGHEZZA_BARRETTA = 20
 ALTEZZA_BARRETTA = 200
 
-rimbalzo = load_sound('assets/rimbalzo.wav'.encode('utf-8'))
-punto = load_sound('assets/punto.mp3'.encode('utf-8'))
+rimbalzo = load_sound('assets/rimbalzo.wav')
+punto = load_sound('assets/punto.mp3')
 
 barretta1 = Barretta.Barretta(LARGHEZZA_BARRETTA,200, LARGHEZZA_BARRETTA, ALTEZZA_BARRETTA, 10, WHITE)
 barretta2 = Barretta.Barretta(1920 - LARGHEZZA_BARRETTA - 20,200, LARGHEZZA_BARRETTA, ALTEZZA_BARRETTA, 10, WHITE)

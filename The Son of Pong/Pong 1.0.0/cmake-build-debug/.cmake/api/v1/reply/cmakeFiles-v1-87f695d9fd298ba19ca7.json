@@ -21,6 +21,11 @@
 		{
 			"isCMake" : true,
 			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2024.2.0.1/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeMinGWFindMake.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
 			"path" : "C:/Program Files/JetBrains/CLion 2024.2.0.1/bin/cmake/win/x64/share/cmake-3.29/Modules/CMakeSystemSpecificInitialize.cmake"
 		},
 		{
@@ -817,8 +822,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "C:/Users/Marco/Desktop/Informatica/Vacanze/Pong/Verzione_finale/Pong 1.0.0/cmake-build-debug",
-		"source" : "C:/Users/Marco/Desktop/Informatica/Vacanze/Pong/Verzione_finale/Pong 1.0.0"
+		"build" : "C:/Users/Marco/Desktop/Informatica/Progetti/Versioni-The-son-of-PONG/The Son of Pong/Pong 1.0.0/cmake-build-debug",
+		"source" : "C:/Users/Marco/Desktop/Informatica/Progetti/Versioni-The-son-of-PONG/The Son of Pong/Pong 1.0.0"
 	},
 	"version" : 
 	{

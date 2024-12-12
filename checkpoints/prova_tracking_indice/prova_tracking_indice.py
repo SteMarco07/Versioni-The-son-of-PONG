@@ -9,7 +9,7 @@ cam.set(cv.CAP_PROP_FRAME_WIDTH, width)
 cam.set(cv.CAP_PROP_FRAME_HEIGHT, height)
 
 
-
+set_target_fps(60)
 init_window(0, 0, "Traccia dita")
 
 
@@ -38,11 +38,10 @@ while cam.isOpened():
     hands_detected = hands.process(frame)
 
 
-    frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
-
     indici = []
 
     if hands_detected.multi_hand_landmarks:
+
         indici = []
 
         for hand_landmarks in hands_detected.multi_hand_landmarks:
@@ -55,10 +54,12 @@ while cam.isOpened():
 
         indici.sort(key=lambda pos: pos[0])
 
-        if len(indici) > 0:
+
+
+        if len(indici) > 0 and 0 < indici[0][1] * get_screen_height() - altezza/ 2 and indici[0][1] * get_screen_height() + altezza/ 2 < get_screen_height():
             y1 = int(indici[0][1] * get_screen_height() - altezza/ 2)
 
-        if len(indici) > 1:
+        if len(indici) > 1 and 0 < indici[1][1] * get_screen_height() - altezza/ 2 and indici[1][1] * get_screen_height() + altezza/ 2 < get_screen_height():
             y2 = int(indici[1][1] * get_screen_height() - altezza/ 2)
 
     # Disegna la finestra

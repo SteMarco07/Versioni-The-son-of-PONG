@@ -81,6 +81,7 @@ class Pallina:
 
     def aggiorna_x(self, barretta1, barretta2):
         # Rileva collisioni con le barrette
+
         rec1 = tuple(barretta1.get_rettangolo().values())
         rec2 = tuple(barretta2.get_rettangolo().values())
         if check_collision_circle_rec(self.get_pos(), self.__raggio, rec1) and self.__rimbalzo:

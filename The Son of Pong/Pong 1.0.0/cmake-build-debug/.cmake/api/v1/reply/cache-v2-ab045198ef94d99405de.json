@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/Marco/Desktop/Informatica/Vacanze/Pong/Verzione_finale/Pong 1.0.0/cmake-build-debug"
+			"value" : "c:/Users/Marco/Desktop/Informatica/Progetti/Versioni-The-son-of-PONG/The Son of Pong/Pong 1.0.0/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -538,22 +538,6 @@
 			"value" : ""
 		},
 		{
-			"name" : "CMAKE_EXPORT_COMPILE_COMMANDS",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "Enable/Disable output of compile commands during generation."
-				}
-			],
-			"type" : "BOOL",
-			"value" : ""
-		},
-		{
 			"name" : "CMAKE_EXTRA_GENERATOR",
 			"properties" : 
 			[
@@ -575,7 +559,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Marco/Desktop/Informatica/Vacanze/Pong/Verzione_finale/Pong 1.0.0/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "C:/Users/Marco/Desktop/Informatica/Progetti/Versioni-The-son-of-PONG/The Son of Pong/Pong 1.0.0/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -587,7 +571,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "Ninja"
+			"value" : "MinGW Makefiles"
 		},
 		{
 			"name" : "CMAKE_GENERATOR_INSTANCE",
@@ -647,7 +631,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/Marco/Desktop/Informatica/Vacanze/Pong/Verzione_finale/Pong 1.0.0"
+			"value" : "C:/Users/Marco/Desktop/Informatica/Progetti/Versioni-The-son-of-PONG/The Son of Pong/Pong 1.0.0"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -682,12 +666,16 @@
 			"properties" : 
 			[
 				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
 					"name" : "HELPSTRING",
 					"value" : "make program"
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Program Files/JetBrains/CLion 2024.2.0.1/bin/ninja/win/x64/ninja.exe"
+			"value" : "C:/PROGRA~1/JETBRA~1/CLION2~1.1/bin/mingw/bin/mingw32-make.exe"
 		},
 		{
 			"name" : "CMAKE_MODULE_LINKER_FLAGS",
@@ -1279,7 +1267,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Marco/Desktop/Informatica/Vacanze/Pong/Verzione_finale/Pong 1.0.0/cmake-build-debug"
+			"value" : "C:/Users/Marco/Desktop/Informatica/Progetti/Versioni-The-son-of-PONG/The Son of Pong/Pong 1.0.0/cmake-build-debug"
 		},
 		{
 			"name" : "Pong_IS_TOP_LEVEL",
@@ -1303,7 +1291,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Marco/Desktop/Informatica/Vacanze/Pong/Verzione_finale/Pong 1.0.0"
+			"value" : "C:/Users/Marco/Desktop/Informatica/Progetti/Versioni-The-son-of-PONG/The Son of Pong/Pong 1.0.0"
 		},
 		{
 			"name" : "RAYLIBRARY",
@@ -1315,7 +1303,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "C:/Users/Marco/Desktop/Informatica/Vacanze/Pong/Verzione_finale/Pong 1.0.0/lib/libraylib.a"
+			"value" : "C:/Users/Marco/Desktop/Informatica/Progetti/Versioni-The-son-of-PONG/The Son of Pong/Pong 1.0.0/lib/libraylib.a"
 		},
 		{
 			"name" : "_CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED",

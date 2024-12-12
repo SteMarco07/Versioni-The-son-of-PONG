@@ -1,6 +1,9 @@
+
 from pyray import *
 
 from Funzioni_Varie import scrivi_messaggio
+import cv2 as cv
+import mediapipe.python.solutions.hands as mp_hands
 
 class Gioco:
     def __init__(self, g1, g2, pallina):
@@ -15,22 +18,74 @@ class Gioco:
         #3) pausa dovuta a un giocatore che segna un punto
         #4) vittoria
         #5) menu vari che aggiungeremo [prima o poi]
+        self.__cam = self.carica_camera()
+        self.__hands = mp_hands.Hands(
+            static_image_mode=False,
+            max_num_hands=2,
+            min_detection_confidence=0.5
+        )
+        self.__frame = None
+
+    def carica_camera(self):
+        cam = cv.VideoCapture(0)
+        width = 1280
+        height = 720
+        cam.set(cv.CAP_PROP_FRAME_WIDTH, width)
+        cam.set(cv.CAP_PROP_FRAME_HEIGHT, height)
+        return cam
+
+    def aggiorna_frame(self):
+        success, frame = self.__cam.read()
+        self.__frame = cv.flip(frame, 1)
+
+        if not success:
+            print("Frame della videocamera non disponibile")
+
+        self.__frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+
 
     def aggiorna_giocatori(self):
-        self.__giocatori[0].aggiorna_barretta(1)
-        self.__giocatori[1].aggiorna_barretta(2)
+
+        self.aggiorna_frame()
+
+        hands_detected = self.__hands.process(self.__frame)
+
+        if hands_detected.multi_hand_landmarks:
+
+            altezza1 = self.__giocatori[0].get_barretta().get_altezza()
+            altezza2 = self.__giocatori[1].get_barretta().get_altezza()
+
+            indici = []
+
+            for hand_landmarks in hands_detected.multi_hand_landmarks:
+                fingertip = hand_landmarks.landmark[8]
+                h, w, _ = self.__frame.shape
+                cx, cy = int(fingertip.x * w), int(fingertip.y * h)
+                cv.circle(self.__frame, (cx, cy), 10, (0, 255, 0), -1)
+                indici.append((fingertip.x, fingertip.y))
+
+            indici.sort(key=lambda pos: pos[0])
+
+            if len(indici) > 0 and 0 < indici[0][1] * get_screen_height() - altezza1 / 2 and indici[0][
+                1] * get_screen_height() + altezza1 / 2 < get_screen_height():
+                self.__giocatori[0].get_barretta().set_y(int(indici[0][1] * get_screen_height() - altezza1 / 2))
+
+            if len(indici) > 1 and 0 < indici[1][1] * get_screen_height() - altezza2 / 2 and indici[1][
+                1] * get_screen_height() + altezza2 / 2 < get_screen_height():
+                self.__giocatori[1].get_barretta().set_y(int(indici[1][1] * get_screen_height() - altezza2 / 2))
+
+    def aggiungi_punto(self, indice):
+        self.__giocatori[indice].aggiungi_punto()
+
+    def aggiorna(self):
+
+        self.aggiorna_giocatori()
 
         barretta1 = self.__giocatori[0].get_barretta()
         barretta2 = self.__giocatori[1].get_barretta()
 
         self.__pallina.aggiorna_y(get_screen_height())
         self.__pallina.aggiorna_x(barretta1, barretta2)
-
-    def aggiungi_punto(self, indice):
-        self.__giocatori[indice].aggiungi_punto()
-
-    def aggiorna(self):
-        self.aggiorna_giocatori()
 
     def reset_pallina(self):
         self.__pallina.reset()
@@ -77,12 +132,14 @@ class Gioco:
         self.__giocatori[0].disegna(get_screen_width()*0.25,50)
         self.__giocatori[1].disegna(get_screen_width()*0.75,50)
 
+
+
     def carica_musica(self):
         self.__musiche = {
-            "chill" : load_sound('assets/chill.mp3'.encode('utf-8')),
-            "partita" : load_sound('assets/partita.mp3'.encode('utf-8')),
-            "vittoria" : load_sound('assets/vittoria.mp3'.encode('utf-8')),
-            "punto" : load_sound('assets/punto.mp3'.encode('utf-8'))
+            "chill" : load_sound('assets/chill.mp3'),
+            "partita" : load_sound('assets/partita.mp3'),
+            "vittoria" : load_sound('assets/vittoria.mp3'),
+            "punto" : load_sound('assets/punto.mp3')
 
         }
 
