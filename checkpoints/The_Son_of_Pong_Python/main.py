@@ -1,11 +1,13 @@
 from pyray import *
 from raylib import *
-from Funzioni_Varie import scrivi_messaggio
+import cv2
 
 import Barretta
 import Pallina
 import Giocatore
 import Gioco
+
+from Funzioni_Varie import scrivi_messaggio
 
 init_audio_device()
 
@@ -25,7 +27,7 @@ g2 = Giocatore.Giocatore(barretta2, "G2")
 
 gioco = Gioco.Gioco(g1, g2, pallina)
 
-PUNTI_FINALI = 10
+PUNTI_FINALI = 2
 
 set_target_fps(60)
 init_window(0, 0, "test")
@@ -34,6 +36,8 @@ toggle_fullscreen()
 gioco.carica_musica()
 
 chi = -1
+
+cam = cv2.VideoCapture(0)
 
 while not window_should_close():
 
@@ -50,7 +54,8 @@ while not window_should_close():
         case 1:  # si sta giocando la partita
             gioco.aggiorna()
             if is_key_pressed(KEY_P):
-                gioco.set_stato(2)
+                gioco.cambia_valore_pausa()
+            # gioco.cambia_stato_pausa()
             if gioco.controlla_pallina() != -1:
                 gioco.set_stato(3)
                 play_sound(punto)
@@ -58,7 +63,8 @@ while not window_should_close():
         case 2:  # pausa dal giocatore
             scrivi_messaggio("Il gioco e' in pausa", 40)
             if is_key_pressed(KEY_P):
-                gioco.set_stato(1)
+                gioco.cambia_valore_pausa()
+            # gioco.cambia_stato_pausa()
 
         case 3:  # pausa da uno che fa punto
             chi = (gioco.controlla_pallina())

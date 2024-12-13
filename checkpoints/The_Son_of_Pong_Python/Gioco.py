@@ -2,9 +2,9 @@ from pyray import *
 from Funzioni_Varie import scrivi_messaggio
 import cv2 as cv
 import mediapipe.python.solutions.hands as mp_hands
+from Mano import *
 
-
-
+N_MIN_FRAME_CONSECUTIVI = 12
 
 
 class Gioco:
@@ -35,8 +35,10 @@ class Gioco:
         self.__cam_w = 1280
         self.__cam = self.carica_camera()
         self.aggiorna_frame()
+        self.__mano = Mano()
+        self.__conta_frame_consecutivi = 0
 
-    def carica_camera(self,n_cam=0):
+    def carica_camera(self, n_cam=0):
         cam = cv.VideoCapture(n_cam)
         cam.set(cv.CAP_PROP_FRAME_WIDTH, self.__cam_w)
         cam.set(cv.CAP_PROP_FRAME_HEIGHT, self.__cam_h)
@@ -68,18 +70,19 @@ class Gioco:
                 # h, w, _ = self.__frame.shape
                 # cx, cy = int(fingertip.x * w), int(fingertip.y * h)
                 # cv.circle(self.__frame, (cx, cy), 10, (0, 255, 0), -1)
-                self.__indici.append((fingertip.x, fingertip.y))
+                self.__indici.append((fingertip.x + 2 * (0.5 - fingertip.x), fingertip.y))
 
-            self.__indici.sort(key=lambda pos: pos[0], reverse=True)
+            self.__indici.sort()
 
             if (len(self.__indici) > 0 and 0 < self.__indici[0][1] * get_screen_height() - altezza1 / 2 and
                     self.__indici[0][1] * get_screen_height() + altezza1 / 2 < get_screen_height()):
-                self.__v_barretta_1 = int((self.__indici[0][1] * get_screen_height() - altezza1 / 2 - self.__giocatori[0].get_barretta().get_y())/self.__salta_frame)
+                self.__v_barretta_1 = int((self.__indici[0][1] * get_screen_height() - altezza1 / 2 - self.__giocatori[
+                    0].get_barretta().get_y()) / self.__salta_frame)
 
             if (len(self.__indici) > 1 and 0 < self.__indici[1][1] * get_screen_height() - altezza2 / 2 and
                     self.__indici[1][1] * get_screen_height() + altezza2 / 2 < get_screen_height()):
-                self.__v_barretta_2 = int((self.__indici[1][1] * get_screen_height() - altezza1 / 2 - self.__giocatori[1].get_barretta().get_y())/self.__salta_frame)
-
+                self.__v_barretta_2 = int((self.__indici[1][1] * get_screen_height() - altezza1 / 2 - self.__giocatori[
+                    1].get_barretta().get_y()) / self.__salta_frame)
 
     def aggiungi_punto(self, indice):
         self.__giocatori[indice].aggiungi_punto()
@@ -100,6 +103,24 @@ class Gioco:
         self.__pallina.aggiorna_x(barretta1, barretta2)
 
         self.__frame_count += 1
+
+    def cambia_stato_pausa(self):
+        if self.__frame_count >= self.__salta_frame - 1:
+            if self.__mano.rileva_gesto(self.__frame):
+                self.__conta_frame_consecutivi += 1
+                if self.__conta_frame_consecutivi == N_MIN_FRAME_CONSECUTIVI:
+                    self.__conta_frame_consecutivi = 0
+                    self.cambia_valore_pausa()
+            else:
+                self.__conta_frame_consecutivi = 0
+
+    def cambia_valore_pausa(self):
+        if self.__stato == 1:
+            self.__stato = 2
+            return
+        if self.__stato == 2:
+            self.__stato = 1
+            return
 
     def reset_pallina(self):
         self.__pallina.reset()
@@ -135,13 +156,16 @@ class Gioco:
             scrivi_messaggio("IL GIOCATORE 2 HA VINTO", 40)
 
     def disegna(self):
-        #Disegna il contorno del frame
-        draw_rectangle_lines(get_screen_width()//2-self.__cam_w//2, get_screen_height()//2-self.__cam_h//2, int(self.__cam_w), int(self.__cam_h), WHITE)
-        #Disegna i punti delle dita
+        n_x, n_y = (get_screen_width() - self.__cam_w) // 2, (get_screen_height() - self.__cam_h) // 2
+        # Disegna il contorno del frame
+        draw_rectangle_lines(n_x, n_y, int(self.__cam_w), int(self.__cam_h), WHITE)
+        # Disegna i punti delle dita
         if len(self.__indici) > 0:
-            draw_circle(int(self.__indici[0][0]*self.__cam_w + get_screen_width()//2 - self.__cam_w), int(self.__indici[0][1]*self.__cam_h + get_screen_height()//2-self.__cam_h), 20, RED)
+            draw_circle(int(self.__indici[0][0] * self.__cam_w + n_x),
+                        int(self.__indici[0][1] * self.__cam_h + n_y), 20, RED)
         if len(self.__indici) > 1:
-            draw_circle(int(self.__indici[1][0]*self.__cam_w + get_screen_width()//2 - self.__cam_w), int(self.__indici[1][1]*self.__cam_h + get_screen_height()//2-self.__cam_h ), 20, RED)
+            draw_circle(int(self.__indici[1][0] * self.__cam_w + n_x),
+                        int(self.__indici[1][1] * self.__cam_h + n_y), 20, RED)
         for i in range(0, get_screen_height(), 80):
             l = 6
             draw_rectangle(int((get_screen_width() - l) / 2), i, l, 40, WHITE)
@@ -155,7 +179,6 @@ class Gioco:
             "partita": load_sound('assets/partita.mp3'),
             "vittoria": load_sound('assets/vittoria.mp3'),
             "punto": load_sound('assets/punto.mp3')
-
         }
 
     def __gestisci_musiche(self, target):
@@ -187,3 +210,6 @@ class Gioco:
 
     def riprendi(self, key):
         resume_sound(self.__musiche[key])
+
+    def get_frame_count(self):
+        return self.__frame_count

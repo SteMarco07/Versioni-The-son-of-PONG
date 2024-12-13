@@ -1,5 +1,3 @@
-from pyray import *
-
 class Colore:
 
     def __init__(self, attuale, rgb, custom, rgb_attivo):
