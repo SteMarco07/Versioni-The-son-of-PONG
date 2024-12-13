@@ -1,5 +1,4 @@
 import math
-
 from pyray import *
 import random
 
@@ -10,12 +9,12 @@ class Ball:
         self.__pos = {"x": x, "y": y}
         self.__raggio = raggio
         self.__rimbalzo = True
-        self.__v = {"v0":v0, "vx":vx, "vy":vy}
+        self.__v = {"v0": v0, "vx": vx, "vy": vy}
         self.colore = colore
         self.__suono = suono
 
     def reset_vx(self):
-        if random.choice([1,2]) == 1:
+        if random.choice([1, 2]) == 1:
             self.__v["vx"] = -self.__v["v0"]
             self.__rimbalzo = True
         else:
@@ -23,8 +22,8 @@ class Ball:
             self.__rimbalzo = False
 
     def reset_vy(self):
-        moltiplicatore = int( self.__v["v0"] * random.randrange(50,100)/100)
-        if random.choice([1,2]) == 1:
+        moltiplicatore = int(self.__v["v0"] * random.randrange(50, 100) / 100)
+        if random.choice([1, 2]) == 1:
             self.__v["vy"] = -moltiplicatore
         else:
             self.__v["vy"] = moltiplicatore
@@ -44,13 +43,13 @@ class Ball:
 
     def aggiorna_y(self, screen_height):
         if self.__pos["y"] - self.__raggio <= 0:
-            self.__v["vy"] = abs(self.__v["vy"] )
+            self.__v["vy"] = abs(self.__v["vy"])
             play_sound(self.__suono)
         elif self.__pos["y"] + self.__raggio >= screen_height:
-            self.__v["vy"]  = -self.__v["vy"]
+            self.__v["vy"] = -self.__v["vy"]
             play_sound(self.__suono)
 
-        self.__pos["y"]  += self.__v["vy"]
+        self.__pos["y"] += self.__v["vy"]
 
     def __calcola_rimbalzo(self, barretta):
         # Calcola la posizione relativa del punto di contatto
@@ -88,5 +87,5 @@ class Ball:
         self.__pos["x"] += self.__v["vx"]
 
     def disegna(self):
-        #per debug eliminare: print(f"pos x:{self.__pos["x"]}, pos y: {self.__pos["y"]}")
+        # per debug eliminare: print(f"pos x:{self.__pos["x"]}, pos y: {self.__pos["y"]}")
         draw_circle(int(self.__pos["x"]), int(self.__pos["y"]), self.__raggio, self.colore)

@@ -1,18 +1,15 @@
 from pyray import *
 from raylib import *
-
+from Funzioni_Varie import scrivi_messaggio
 
 import Barretta
 import Pallina
 import Giocatore
 import Gioco
-import Colore
-
-from Funzioni_Varie import scrivi_messaggio
 
 init_audio_device()
 
-pallina = Pallina.Pallina(0,0, 10, 7, -3, 3, WHITE, LoadSound('assets/rimbalzo.wav'.encode('utf-8')))
+pallina = Pallina.Pallina(0, 0, 10, 15, -3, 3, WHITE, LoadSound('assets/rimbalzo.wav'.encode('utf-8')))
 
 LARGHEZZA_BARRETTA = 20
 ALTEZZA_BARRETTA = 200
@@ -20,13 +17,13 @@ ALTEZZA_BARRETTA = 200
 rimbalzo = load_sound('assets/rimbalzo.wav')
 punto = load_sound('assets/punto.mp3')
 
-barretta1 = Barretta.Barretta(LARGHEZZA_BARRETTA,200, LARGHEZZA_BARRETTA, ALTEZZA_BARRETTA, 10, WHITE)
-barretta2 = Barretta.Barretta(1920 - LARGHEZZA_BARRETTA - 20,200, LARGHEZZA_BARRETTA, ALTEZZA_BARRETTA, 10, WHITE)
+barretta1 = Barretta.Barretta(LARGHEZZA_BARRETTA, 200, LARGHEZZA_BARRETTA, ALTEZZA_BARRETTA, 10, WHITE)
+barretta2 = Barretta.Barretta(1920 - LARGHEZZA_BARRETTA - 20, 200, LARGHEZZA_BARRETTA, ALTEZZA_BARRETTA, 10, WHITE)
 
-g1 = Giocatore.Giocatore(barretta1,"G1")
-g2 = Giocatore.Giocatore(barretta2,"G2")
+g1 = Giocatore.Giocatore(barretta1, "G1")
+g2 = Giocatore.Giocatore(barretta2, "G2")
 
-gioco = Gioco.Gioco(g1,g2,pallina)
+gioco = Gioco.Gioco(g1, g2, pallina)
 
 PUNTI_FINALI = 2
 
@@ -47,13 +44,13 @@ while not window_should_close():
         gioco.disegna()
 
     match stato:
-        case 0: #si deve ancora selezionare la partita
+        case 0:  # si deve ancora selezionare la partita
             scrivi_messaggio('Premere "SPAZIO" per iniziare la partita', 50)
             if is_key_pressed(KEY_SPACE):
                 gioco.reset_pallina()
                 gioco.set_stato(1)
 
-        case 1: #si sta giocando la partita
+        case 1:  # si sta giocando la partita
             gioco.aggiorna()
             if is_key_pressed(KEY_P):
                 gioco.set_stato(2)
@@ -61,15 +58,15 @@ while not window_should_close():
                 gioco.set_stato(3)
                 play_sound(punto)
 
-        case 2: #pausa dal giocatore
+        case 2:  # pausa dal giocatore
             scrivi_messaggio("Il gioco e' in pausa", 40)
             if is_key_pressed(KEY_P):
                 gioco.set_stato(1)
 
-        case 3: #pausa da uno che fa punto
+        case 3:  # pausa da uno che fa punto
             chi = (gioco.controlla_pallina())
 
-            if gioco.qualcuno_sta_per_vincere(chi,PUNTI_FINALI) == -1:
+            if gioco.qualcuno_sta_per_vincere(chi, PUNTI_FINALI) == -1:
                 scrivi_messaggio("\t\t\tPunto del Giocatore " + str(chi + 1) + '!\nPremi "SPAZIO" per continuare', 50)
                 if is_key_pressed(KEY_SPACE):
                     gioco.set_stato(1)
@@ -79,7 +76,7 @@ while not window_should_close():
             else:
                 gioco.set_stato(4)
 
-        case 4: #vittoria di uno dei due giocatori
+        case 4:  # vittoria di uno dei due giocatori
             scrivi_messaggio("VITTORIA DEL GI0CATORE " + str(chi + 1) + '!\n\t\tPremi "R" per resettare', 50)
             gioco.reset_pallina()
             if is_key_pressed(KEY_R):
@@ -87,6 +84,7 @@ while not window_should_close():
 
     begin_drawing()
     clear_background(BLACK)
+    draw_fps(0, 0)
     end_drawing()
 
 close_audio_device()
