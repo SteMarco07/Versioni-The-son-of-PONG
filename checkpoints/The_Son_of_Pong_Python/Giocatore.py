@@ -25,8 +25,13 @@ class Giocatore:
     def get_punteggio(self):
         return self.__punteggio
 
-    def aggiorna_barretta(self, pos_y):
-        self.__barretta.set_y(pos_y)
+    def aggiorna_barretta(self, v):
+        self.__barretta.set_y(self.__barretta.get_y() + v)
+        y = self.__barretta.get_y()
+        if y < 0:
+            self.__barretta.set_y(0)
+        elif y + self.__barretta.get_h() > get_screen_height():
+            self.__barretta.set_y(get_screen_height() - self.__barretta.get_h())
 
     def get_barretta(self):
         return self.__barretta

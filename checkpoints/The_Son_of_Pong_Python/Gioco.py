@@ -4,8 +4,12 @@ import cv2 as cv
 import mediapipe.python.solutions.hands as mp_hands
 
 
+
+
+
 class Gioco:
     def __init__(self, g1, g2, pallina):
+        self.__indici = []
         self.__fatto_una_volta = None
         self.__musiche = None
         self.__giocatori = [g1, g2]
@@ -17,7 +21,6 @@ class Gioco:
         # 3) pausa dovuta a un giocatore che segna un punto
         # 4) vittoria
         # 5) menu vari che aggiungeremo [prima o poi]
-        self.__cam = self.carica_camera()
         self.__hands = mp_hands.Hands(
             static_image_mode=False,
             max_num_hands=2,
@@ -25,12 +28,18 @@ class Gioco:
         )
         self.__frame = None
         self.__frame_count = 0
+        self.__v_barretta_1 = 0
+        self.__v_barretta_2 = 0
+        self.__salta_frame = 3
+        self.__cam_h = 720
+        self.__cam_w = 1280
+        self.__cam = self.carica_camera()
+        self.aggiorna_frame()
 
-    def carica_camera(self, n_cam=0):
+    def carica_camera(self,n_cam=0):
         cam = cv.VideoCapture(n_cam)
-        width, height = 1280, 720
-        cam.set(cv.CAP_PROP_FRAME_WIDTH, width)
-        cam.set(cv.CAP_PROP_FRAME_HEIGHT, height)
+        cam.set(cv.CAP_PROP_FRAME_WIDTH, self.__cam_w)
+        cam.set(cv.CAP_PROP_FRAME_HEIGHT, self.__cam_h)
         return cam
 
     def aggiorna_frame(self):
@@ -44,7 +53,7 @@ class Gioco:
         self.__frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
 
     def aggiorna_giocatori(self):
-
+        self.__indici = []
         self.aggiorna_frame()
 
         hands_detected = self.__hands.process(self.__frame)
@@ -54,32 +63,35 @@ class Gioco:
             altezza1 = self.__giocatori[0].get_barretta().get_h()
             altezza2 = self.__giocatori[1].get_barretta().get_h()
 
-            indici = []
-
             for hand_landmarks in hands_detected.multi_hand_landmarks:
                 fingertip = hand_landmarks.landmark[8]
                 # h, w, _ = self.__frame.shape
                 # cx, cy = int(fingertip.x * w), int(fingertip.y * h)
                 # cv.circle(self.__frame, (cx, cy), 10, (0, 255, 0), -1)
-                indici.append((fingertip.x, fingertip.y))
+                self.__indici.append((fingertip.x, fingertip.y))
 
-            indici.sort(key=lambda pos: pos[0], reverse=True)
+            self.__indici.sort(key=lambda pos: pos[0], reverse=True)
 
-            if len(indici) > 0 and 0 < indici[0][1] * get_screen_height() - altezza1 / 2 and indici[0][
-                1] * get_screen_height() + altezza1 / 2 < get_screen_height():
-                self.__giocatori[0].get_barretta().set_y(int(indici[0][1] * get_screen_height() - altezza1 / 2))
+            if (len(self.__indici) > 0 and 0 < self.__indici[0][1] * get_screen_height() - altezza1 / 2 and
+                    self.__indici[0][1] * get_screen_height() + altezza1 / 2 < get_screen_height()):
+                self.__v_barretta_1 = int((self.__indici[0][1] * get_screen_height() - altezza1 / 2 - self.__giocatori[0].get_barretta().get_y())/self.__salta_frame)
 
-            if len(indici) > 1 and 0 < indici[1][1] * get_screen_height() - altezza2 / 2 and indici[1][
-                1] * get_screen_height() + altezza2 / 2 < get_screen_height():
-                self.__giocatori[1].get_barretta().set_y(int(indici[1][1] * get_screen_height() - altezza2 / 2))
+            if (len(self.__indici) > 1 and 0 < self.__indici[1][1] * get_screen_height() - altezza2 / 2 and
+                    self.__indici[1][1] * get_screen_height() + altezza2 / 2 < get_screen_height()):
+                self.__v_barretta_2 = int((self.__indici[1][1] * get_screen_height() - altezza1 / 2 - self.__giocatori[1].get_barretta().get_y())/self.__salta_frame)
+
 
     def aggiungi_punto(self, indice):
         self.__giocatori[indice].aggiungi_punto()
 
     def aggiorna(self):
-        if self.__frame_count == 3:
+        if self.__frame_count == self.__salta_frame:
+            self.__v_barretta_1 = self.__v_barretta_2 = 0
             self.aggiorna_giocatori()
             self.__frame_count = 0
+
+        self.__giocatori[0].aggiorna_barretta(self.__v_barretta_1)
+        self.__giocatori[1].aggiorna_barretta(self.__v_barretta_2)
 
         barretta1 = self.__giocatori[0].get_barretta()
         barretta2 = self.__giocatori[1].get_barretta()
@@ -123,10 +135,16 @@ class Gioco:
             scrivi_messaggio("IL GIOCATORE 2 HA VINTO", 40)
 
     def disegna(self):
+        #Disegna il contorno del frame
+        draw_rectangle_lines(get_screen_width()//2-self.__cam_w//2, get_screen_height()//2-self.__cam_h//2, int(self.__cam_w), int(self.__cam_h), WHITE)
+        #Disegna i punti delle dita
+        if len(self.__indici) > 0:
+            draw_circle(int(self.__indici[0][0]*self.__cam_w + get_screen_width()//2 - self.__cam_w), int(self.__indici[0][1]*self.__cam_h + get_screen_height()//2-self.__cam_h), 20, RED)
+        if len(self.__indici) > 1:
+            draw_circle(int(self.__indici[1][0]*self.__cam_w + get_screen_width()//2 - self.__cam_w), int(self.__indici[1][1]*self.__cam_h + get_screen_height()//2-self.__cam_h ), 20, RED)
         for i in range(0, get_screen_height(), 80):
             l = 6
             draw_rectangle(int((get_screen_width() - l) / 2), i, l, 40, WHITE)
-
         self.__pallina.disegna()
         self.__giocatori[0].disegna(get_screen_width() * 0.25, 50)
         self.__giocatori[1].disegna(get_screen_width() * 0.75, 50)

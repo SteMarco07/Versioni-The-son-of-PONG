@@ -9,7 +9,7 @@ import Gioco
 
 init_audio_device()
 
-pallina = Pallina.Pallina(0, 0, 10, 15, -3, 3, WHITE, LoadSound('assets/rimbalzo.wav'.encode('utf-8')))
+pallina = Pallina.Pallina(10, 4, WHITE, LoadSound('assets/rimbalzo.wav'.encode('utf-8')))
 
 LARGHEZZA_BARRETTA = 20
 ALTEZZA_BARRETTA = 200
@@ -25,7 +25,7 @@ g2 = Giocatore.Giocatore(barretta2, "G2")
 
 gioco = Gioco.Gioco(g1, g2, pallina)
 
-PUNTI_FINALI = 2
+PUNTI_FINALI = 10
 
 set_target_fps(60)
 init_window(0, 0, "test")
@@ -39,9 +39,6 @@ while not window_should_close():
 
     gioco.riproduci_musica()
     stato = gioco.get_stato()
-
-    if stato == 1 or stato == 2:
-        gioco.disegna()
 
     match stato:
         case 0:  # si deve ancora selezionare la partita
@@ -83,8 +80,11 @@ while not window_should_close():
                 gioco.reset()
 
     begin_drawing()
-    clear_background(BLACK)
+    if stato == 1 or stato == 2:
+        gioco.disegna()
     draw_fps(0, 0)
+    clear_background(BLACK)
+
     end_drawing()
 
 close_audio_device()

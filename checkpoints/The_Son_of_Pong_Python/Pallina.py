@@ -5,11 +5,11 @@ import random
 
 class Pallina:
 
-    def __init__(self, x, y, raggio, v0, vx, vy, colore, suono):
-        self.__pos = {"x": x, "y": y}
+    def __init__(self, raggio, v0, colore, suono):
+        self.__pos = {"x": 0, "y": 0}
         self.__raggio = raggio
         self.__rimbalzo = True
-        self.__v = {"v0": v0, "vx": vx, "vy": vy}
+        self.__v = {"v0": v0, "vx": 0, "vy": 0}
         self.colore = colore
         self.__suono = suono
 

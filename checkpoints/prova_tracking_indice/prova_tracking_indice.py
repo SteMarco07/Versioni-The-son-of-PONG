@@ -73,7 +73,7 @@ while cam.isOpened():
     end_drawing()
 
     # Mostra il frame della videocamera
-    cv.imshow("FrameVideo", frame)
+
 
     # Esci premendo 'q'
     if cv.waitKey(20) & 0xff == ord('q'):

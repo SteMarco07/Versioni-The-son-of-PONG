@@ -51,6 +51,7 @@ class Ball:
 
         self.__pos["y"] += self.__v["vy"]
 
+
     def __calcola_rimbalzo(self, barretta):
         # Calcola la posizione relativa del punto di contatto
         distanza_relativa = (self.__pos["y"] - (barretta.get_y() + barretta.get_h() / 2)) / (barretta.get_h() / 2)
