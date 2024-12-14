@@ -53,9 +53,9 @@ class Mano:
 
                 # Controlla se la mano è aperta
                 if self.__is_open_hand(landmarks.landmark):
-                    return "APERTO"
+                    return True
 
-        return None
+        return False
 
 
 # Esempio di utilizzo della classe Mano

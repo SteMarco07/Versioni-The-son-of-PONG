@@ -122,6 +122,10 @@ class Gioco:
             self.__stato = 1
             return
 
+    def rileva_gesto_palmo(self):
+        self.aggiorna_frame()
+        return self.__mano.rileva_gesto(self.__frame)
+
     def reset_pallina(self):
         self.__pallina.reset()
 

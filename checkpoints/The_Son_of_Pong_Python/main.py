@@ -11,7 +11,7 @@ from Funzioni_Varie import scrivi_messaggio
 
 init_audio_device()
 
-pallina = Pallina.Pallina(10, 4, WHITE, LoadSound('assets/rimbalzo.wav'.encode('utf-8')))
+pallina = Pallina.Pallina(10, 15, WHITE, LoadSound('assets/rimbalzo.wav'.encode('utf-8')))
 
 LARGHEZZA_BARRETTA = 20
 ALTEZZA_BARRETTA = 200
@@ -46,8 +46,8 @@ while not window_should_close():
 
     match stato:
         case 0:  # si deve ancora selezionare la partita
-            scrivi_messaggio('Premere "SPAZIO" per iniziare la partita', 50)
-            if is_key_pressed(KEY_SPACE):
+            scrivi_messaggio('Apri la mano per iniziare la partita', 50)
+            if gioco.rileva_gesto_palmo() or is_key_pressed(KEY_SPACE):
                 gioco.reset_pallina()
                 gioco.set_stato(1)
 
@@ -70,8 +70,8 @@ while not window_should_close():
             chi = (gioco.controlla_pallina())
 
             if gioco.qualcuno_sta_per_vincere(chi, PUNTI_FINALI) == -1:
-                scrivi_messaggio("\t\t\tPunto del Giocatore " + str(chi + 1) + '!\nPremi "SPAZIO" per continuare', 50)
-                if is_key_pressed(KEY_SPACE):
+                scrivi_messaggio("\t\t\tPunto del Giocatore " + str(chi + 1) + '!\n\tApri la mano per continuare', 50)
+                if gioco.rileva_gesto_palmo() or is_key_pressed(KEY_SPACE):
                     gioco.set_stato(1)
                     gioco.reset_pallina()
                     gioco.aggiungi_punto(chi)

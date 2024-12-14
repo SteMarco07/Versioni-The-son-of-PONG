@@ -20,7 +20,7 @@ class Pallina:
 
     def reset_vx(self):
         if get_random_value(1, 2) == 1:
-            self.__v["vx"] = -self.__v["v0"]
+            self.__v["vx"] = - self.__v["v0"]
             self.__rimbalzo = True
         else:
             self.__v["vx"] = self.__v["v0"]
