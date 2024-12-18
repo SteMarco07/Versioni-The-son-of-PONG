@@ -38,7 +38,7 @@ class Barretta:
         y = int(self.__rec["y"])
         l = int(self.__rec["l"])
         h = int(self.__rec["h"])
-        draw_rectangle(x, y, l, h, colore.get_colore())
+        draw_rectangle(x, y, l, h, colore)
 
     def aggiorna_x(self, limite1, limite2, tasto_destra, tasto_sinistra):
         x = self.__rec["x"]

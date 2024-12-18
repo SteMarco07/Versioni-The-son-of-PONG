@@ -174,8 +174,8 @@ class Gioco:
             l = 6
             draw_rectangle(int((get_screen_width() - l) / 2), i, l, 40, self.__colore.get_colore())
         self.__pallina.disegna(self.__colore)
-        self.__giocatori[0].disegna(get_screen_width() * 0.25, 50)
-        self.__giocatori[1].disegna(get_screen_width() * 0.75, 50)
+        self.__giocatori[0].disegna(get_screen_width() * 0.25, 50, self.__colore.get_colore())
+        self.__giocatori[1].disegna(get_screen_width() * 0.75, 50, self.__colore.get_colore())
 
     def carica_musica(self):
         self.__musiche = {

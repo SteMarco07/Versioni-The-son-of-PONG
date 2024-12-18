@@ -40,4 +40,4 @@ class Giocatore:
         x = int(x)
         y = int(y)
         self.__barretta.disegna(colore)
-        draw_text(str(self.__punteggio), int(x), int(y), 30, colore.get_colore())
+        draw_text(str(self.__punteggio), int(x), int(y), 30, colore)
