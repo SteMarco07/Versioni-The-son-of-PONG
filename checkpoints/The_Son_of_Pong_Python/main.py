@@ -9,6 +9,8 @@ import Gioco
 
 from Funzioni_Varie import scrivi_messaggio
 
+print("MAIN")
+
 init_audio_device()
 
 pallina = Pallina.Pallina(10, 15, WHITE, LoadSound('assets/rimbalzo.wav'.encode('utf-8')))
@@ -80,9 +82,9 @@ while not window_should_close():
                 gioco.set_stato(4)
 
         case 4:  # vittoria di uno dei due giocatori
-            scrivi_messaggio("VITTORIA DEL GI0CATORE " + str(chi + 1) + '!\n\t\tPremi "R" per resettare', 50)
+            scrivi_messaggio("VITTORIA DEL GI0CATORE " + str(chi + 1) + '!\n\tPremi "R" per resettare oppure apri la mano', 50)
             gioco.reset_pallina()
-            if is_key_pressed(KEY_R):
+            if is_key_pressed(KEY_R) or gioco.rileva_gesto_palmo():
                 gioco.reset()
 
     begin_drawing()

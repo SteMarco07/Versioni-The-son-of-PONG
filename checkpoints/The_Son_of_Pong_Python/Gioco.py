@@ -106,7 +106,7 @@ class Gioco:
 
     def cambia_stato_pausa(self):
         if self.__frame_count >= self.__salta_frame - 1:
-            if self.__mano.rileva_gesto(self.__frame):
+            if self.__mano.is_aperta(self.__frame):
                 self.__conta_frame_consecutivi += 1
                 if self.__conta_frame_consecutivi == N_MIN_FRAME_CONSECUTIVI:
                     self.__conta_frame_consecutivi = 0
@@ -124,7 +124,7 @@ class Gioco:
 
     def rileva_gesto_palmo(self):
         self.aggiorna_frame()
-        return self.__mano.rileva_gesto(self.__frame)
+        return self.__mano.is_aperta(self.__frame)
 
     def reset_pallina(self):
         self.__pallina.reset()
