@@ -7,6 +7,7 @@ import mediapipe.python.solutions.hands as mp_hands
 from Mano import *
 from Colore import Colore
 
+
 N_MIN_FRAME_CONSECUTIVI = 12
 
 class Gioco:
@@ -105,19 +106,22 @@ class Gioco:
         self.__frame_count += 1
 
     def attiva_rgb(self):
-
-        if self.__mano.get_gesto(self.__frame) == "Victory" or is_key_down(KEY_G):
+        if self.__mano.get_gesto(self.__frame) == "Thumb_Up" or is_key_down(KEY_G):
             self.__conta_frame_consecutivi += 1
             if self.__conta_frame_consecutivi >= N_MIN_FRAME_CONSECUTIVI:
                 self.__conta_frame_consecutivi = 0
-                self.__colore.cambia_stato_rgb()
-                print("HO CAMBIATO")
+                self.__colore.set_rgb_attivi()
+                print("RGB ATTIVATI")
+        elif self.__mano.get_gesto(self.__frame) == "Thumb_Down" or is_key_down(KEY_H):
+            self.__conta_frame_consecutivi += 1
+            if self.__conta_frame_consecutivi >= N_MIN_FRAME_CONSECUTIVI:
+                self.__conta_frame_consecutivi = 0
+                self.__colore.set_rgb_disattivi()
+                print("RGB DISATTIVATI")
 
         else:
             self.__conta_frame_consecutivi = 0
 
-    def debug_attiva_rgb(self):
-        self.__colore.cambia_stato_rgb()
 
     def cambia_valore_pausa(self):
         if self.__stato == 1:
@@ -130,10 +134,14 @@ class Gioco:
     def get_gesto(self):
         self.aggiorna_frame()
         ritorno = self.__mano.get_gesto(self.__frame)
-        if ritorno == "Victory":
-            self.debug_attiva_rgb()
+        if ritorno == "Thumb_Up" or ritorno == "Thumb_Down":
+            self.attiva_rgb()
         else:
             return ritorno
+
+    def get_colore(self):
+        self.__colore.aggiorna_rgb()
+        return self.__colore
 
     def reset_pallina(self):
         self.__pallina.reset()

@@ -35,7 +35,7 @@ while True:
     # STEP 5: Estrai e stampa il gesto principale
     if recognition_result.gestures and len(recognition_result.gestures[0]) > 0:
         top_gesture = recognition_result.gestures[0][0]
-        if top_gesture.category_name == "Victory" or top_gesture.category_name == "Open_Palm" or top_gesture.category_name == "Closed_Fist":
+        if top_gesture.category_name != "None":
             print(f"Gesto riconosciuto: {top_gesture.category_name}")
 
     # STEP 6: Mostra il frame catturato dalla webcam

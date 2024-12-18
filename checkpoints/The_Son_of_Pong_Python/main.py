@@ -58,7 +58,7 @@ while not window_should_close():
 
     match stato:
         case 0:  # si deve ancora selezionare la partita
-            scrivi_messaggio('Apri la mano per iniziare la partita', colore, FONT_SIZE=50)
+            scrivi_messaggio('Apri la mano per iniziare la partita', gioco.get_colore(), FONT_SIZE=50)
             gesto = gioco.get_gesto()
             if gesto == "Open_Palm" or is_key_pressed(KEY_SPACE):
                 gioco.reset_pallina()
@@ -77,7 +77,7 @@ while not window_should_close():
 
 
         case 2:  # pausa dal giocatore
-            scrivi_messaggio("Il gioco e' in pausa", colore)
+            scrivi_messaggio("Il gioco e' in pausa", gioco.get_colore())
             if is_key_pressed(KEY_P):
                 gioco.cambia_valore_pausa()
 
@@ -85,7 +85,7 @@ while not window_should_close():
             chi = (gioco.controlla_pallina())
 
             if gioco.qualcuno_sta_per_vincere(chi, PUNTI_FINALI) == -1:
-                scrivi_messaggio("\t\t\tPunto del Giocatore " + str(chi + 1) + '!\n\tApri la mano per continuare', colore, FONT_SIZE = 50)
+                scrivi_messaggio("\t\t\tPunto del Giocatore " + str(chi + 1) + '!\n\tApri la mano per continuare', gioco.get_colore(), FONT_SIZE = 50)
                 gesto = gioco.get_gesto()
                 if gesto == "Open_Palm" or is_key_pressed(KEY_SPACE):
                     gioco.set_stato(1)
@@ -95,7 +95,7 @@ while not window_should_close():
                 gioco.set_stato(4)
 
         case 4:  # vittoria di uno dei due giocatori
-            scrivi_messaggio("VITTORIA DEL GI0CATORE " + str(chi + 1) + '!\n\tChiudi il pugno per Resettare', colore, FONT_SIZE = 50)
+            scrivi_messaggio("VITTORIA DEL GI0CATORE " + str(chi + 1) + '!\n\tChiudi il pugno per Resettare', gioco.get_colore(), FONT_SIZE = 50)
             gioco.reset_pallina()
             gesto = gioco.get_gesto()
             if is_key_pressed(KEY_R) or gesto == "Closed_Fist":

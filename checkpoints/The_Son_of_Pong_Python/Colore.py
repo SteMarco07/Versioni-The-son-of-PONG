@@ -27,8 +27,11 @@ class Colore:
         return self.__rgb
 
 
-    def cambia_stato_rgb(self):
-        self.__rgb_attivo = not self.__rgb_attivo
+    def set_rgb_attivi(self):
+        self.__rgb_attivo = True
+
+    def set_rgb_disattivi(self):
+        self.__rgb_attivo = False
 
     def aggiorna_rgb(self):
         if self.__rgb_attivo:
