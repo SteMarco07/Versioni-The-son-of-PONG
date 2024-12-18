@@ -1,15 +1,15 @@
 import raylib
 from numpy import unsignedinteger
 from raylib import colors
-from raylibpy import WHITE
 
 
 class Colore:
 
     def __init__(self, normale, rgb_attivo):
         self.__normale = normale
-        self.__rgb = WHITE
+        self.__rgb = self.__normale
         self.__rgb_attivo = rgb_attivo
+        self.__velocita = 5
 
     def get_rgb(self):
         return self.__rgb
@@ -17,20 +17,21 @@ class Colore:
     def cambia_stato_rgb(self):
         self.__rgb_attivo = not self.__rgb_attivo
 
-    def aggiorna_rgb(self, velocita=5):
+    def aggiorna_rgb(self):
+        print("aggiorno rgb")
         if not self.__rgb_attivo:
-            velocita = -velocita
-        if 0 < self.__rgb.r < 250:
-            self.__rgb.r += velocita
-        elif 0 < self.__rgb.g < 250:
-            self.__rgb.g += velocita
-        elif 0 < self.__rgb.b < 250:
-            self.__rgb.b += velocita
+            self.__velocita = -self.__velocita
+        if 0 < self.__rgb[0] < 255:
+            self.__rgb[0] += self.__velocita
+        elif 0 < self.__rgb[1] < 255:
+            self.__rgb[1] += self.__velocita
+        elif 0 < self.__rgb[2] < 255:
+            self.__rgb[2] += self.__velocita
         else:
             self.__rgb_attivo = not self.__rgb_attivo
 
     def get_colore(self):
         if self.__rgb_attivo:
-            return list(self.__normale)
+            return tuple(self.__normale)
         else:
-            return list(self.__rgb)
+            return tuple(self.__rgb)

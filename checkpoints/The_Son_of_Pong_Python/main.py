@@ -59,7 +59,8 @@ while not window_should_close():
     match stato:
         case 0:  # si deve ancora selezionare la partita
             scrivi_messaggio('Apri la mano per iniziare la partita', colore, FONT_SIZE=50)
-            if gioco.get_gesto() == "Open_Palm" or is_key_pressed(KEY_SPACE):
+            gesto = gioco.get_gesto()
+            if gesto == "Open_Palm" or is_key_pressed(KEY_SPACE):
                 gioco.reset_pallina()
                 gioco.set_stato(1)
 
@@ -82,7 +83,8 @@ while not window_should_close():
 
             if gioco.qualcuno_sta_per_vincere(chi, PUNTI_FINALI) == -1:
                 scrivi_messaggio("\t\t\tPunto del Giocatore " + str(chi + 1) + '!\n\tApri la mano per continuare', colore, FONT_SIZE = 50)
-                if gioco.get_gesto() == "Open_Palm" or is_key_pressed(KEY_SPACE):
+                gesto = gioco.get_gesto()
+                if gesto == "Open_Palm" or is_key_pressed(KEY_SPACE):
                     gioco.set_stato(1)
                     gioco.reset_pallina()
                     gioco.aggiungi_punto(chi)
@@ -92,7 +94,8 @@ while not window_should_close():
         case 4:  # vittoria di uno dei due giocatori
             scrivi_messaggio("VITTORIA DEL GI0CATORE " + str(chi + 1) + '!\n\tChiudi il pugno per Resettare', colore, FONT_SIZE = 50)
             gioco.reset_pallina()
-            if is_key_pressed(KEY_R) or gioco.get_gesto() == "Closed_Fist":
+            gesto = gioco.get_gesto()
+            if is_key_pressed(KEY_R) or gesto == "Closed_Fist":
                 gioco.reset()
 
     begin_drawing()

@@ -124,7 +124,7 @@ class Gioco:
         ritorno = self.__mano.get_gesto(self.__frame)
         if ritorno == "Victory":
             self.attiva_rgb()
-        else :
+        else:
             return ritorno
 
     def reset_pallina(self):
@@ -217,3 +217,6 @@ class Gioco:
 
     def get_frame_count(self):
         return self.__frame_count
+
+    def get_colore(self):
+        return self.__colore
