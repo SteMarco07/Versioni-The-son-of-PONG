@@ -1,4 +1,6 @@
 from pyray import *
+from raylib import KEY_G
+
 from Funzioni_Varie import scrivi_messaggio
 import cv2 as cv
 import mediapipe.python.solutions.hands as mp_hands
@@ -103,13 +105,19 @@ class Gioco:
         self.__frame_count += 1
 
     def attiva_rgb(self):
-        if self.__frame_count > self.__salta_frame:
-            if self.__mano.get_gesto(self.__frame) == "Victory":
-                self.__conta_frame_consecutivi += 1
-                if self.__conta_frame_consecutivi == N_MIN_FRAME_CONSECUTIVI:
-                    self.__conta_frame_consecutivi = 0
-                    self.__colore.cambia_stato_rgb()
+
+        if self.__mano.get_gesto(self.__frame) == "Victory" or is_key_down(KEY_G):
+            self.__conta_frame_consecutivi += 1
+            if self.__conta_frame_consecutivi >= N_MIN_FRAME_CONSECUTIVI:
                 self.__conta_frame_consecutivi = 0
+                self.__colore.cambia_stato_rgb()
+                print("HO CAMBIATO")
+
+        else:
+            self.__conta_frame_consecutivi = 0
+
+    def debug_attiva_rgb(self):
+        self.__colore.cambia_stato_rgb()
 
     def cambia_valore_pausa(self):
         if self.__stato == 1:
@@ -123,7 +131,7 @@ class Gioco:
         self.aggiorna_frame()
         ritorno = self.__mano.get_gesto(self.__frame)
         if ritorno == "Victory":
-            self.attiva_rgb()
+            self.debug_attiva_rgb()
         else:
             return ritorno
 

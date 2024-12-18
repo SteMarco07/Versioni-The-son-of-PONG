@@ -3,35 +3,47 @@ from numpy import unsignedinteger
 from raylib import colors
 
 
+
 class Colore:
 
     def __init__(self, normale, rgb_attivo):
-        self.__normale = normale
-        self.__rgb = self.__normale
+        self.__normale = {
+            'r' : 255,
+            'g' : 255,
+            'b' : 255,
+            'A' : 255
+        } #BIANCO
+        self.__rgb = {
+            'r' : 255,
+            'g' : 255,
+            'b' : 255,
+            'A' : 255
+        } #RGB
         self.__rgb_attivo = rgb_attivo
-        self.__velocita = 5
+        self.__velocita = 10
+
 
     def get_rgb(self):
         return self.__rgb
+
 
     def cambia_stato_rgb(self):
         self.__rgb_attivo = not self.__rgb_attivo
 
     def aggiorna_rgb(self):
-        print("aggiorno rgb")
-        if not self.__rgb_attivo:
+        if self.__rgb_attivo:
+            for chiave, valore in self.__rgb.items():
+                if chiave != 'A':
+                    if (self.__velocita > 0 and self.__rgb[chiave] + self.__velocita < 255) or (
+                            self.__velocita < 0 < 20 < self.__rgb[chiave] + self.__velocita):
+                        self.__rgb[chiave] = valore + self.__velocita
+                        return
             self.__velocita = -self.__velocita
-        if 0 < self.__rgb[0] < 255:
-            self.__rgb[0] += self.__velocita
-        elif 0 < self.__rgb[1] < 255:
-            self.__rgb[1] += self.__velocita
-        elif 0 < self.__rgb[2] < 255:
-            self.__rgb[2] += self.__velocita
-        else:
-            self.__rgb_attivo = not self.__rgb_attivo
+
 
     def get_colore(self):
-        if self.__rgb_attivo:
-            return tuple(self.__normale)
+        if not self.__rgb_attivo:
+            return tuple(self.__normale.values())
         else:
-            return tuple(self.__rgb)
+            print(f"{tuple(self.__rgb.values())}  V = {self.__velocita}")
+            return tuple(self.__rgb.values())

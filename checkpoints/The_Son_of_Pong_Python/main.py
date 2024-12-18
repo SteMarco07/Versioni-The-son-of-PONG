@@ -72,6 +72,9 @@ while not window_should_close():
             if gioco.controlla_pallina() != -1:
                 gioco.set_stato(3)
                 play_sound(punto)
+            if is_key_pressed(KEY_G):
+                gioco.debug_attiva_rgb()
+
 
         case 2:  # pausa dal giocatore
             scrivi_messaggio("Il gioco e' in pausa", colore)
