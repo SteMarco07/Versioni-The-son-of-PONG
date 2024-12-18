@@ -3,12 +3,12 @@ from Funzioni_Varie import scrivi_messaggio
 import cv2 as cv
 import mediapipe.python.solutions.hands as mp_hands
 from Mano import *
+from Colore import Colore
 
 N_MIN_FRAME_CONSECUTIVI = 12
 
-
 class Gioco:
-    def __init__(self, g1, g2, pallina):
+    def __init__(self, g1, g2, pallina, colore, modello):
         self.__indici = []
         self.__fatto_una_volta = None
         self.__musiche = None
@@ -35,8 +35,9 @@ class Gioco:
         self.__cam_w = 1280
         self.__cam = self.carica_camera()
         self.aggiorna_frame()
-        self.__mano = Mano()
+        self.__mano = Mano(modello)
         self.__conta_frame_consecutivi = 0
+        self.__colore = colore
 
     def carica_camera(self, n_cam=0):
         cam = cv.VideoCapture(n_cam)
@@ -67,9 +68,6 @@ class Gioco:
 
             for hand_landmarks in hands_detected.multi_hand_landmarks:
                 fingertip = hand_landmarks.landmark[8]
-                # h, w, _ = self.__frame.shape
-                # cx, cy = int(fingertip.x * w), int(fingertip.y * h)
-                # cv.circle(self.__frame, (cx, cy), 10, (0, 255, 0), -1)
                 self.__indici.append((fingertip.x + 2 * (0.5 - fingertip.x), fingertip.y))
 
             self.__indici.sort()
@@ -104,14 +102,13 @@ class Gioco:
 
         self.__frame_count += 1
 
-    def cambia_stato_pausa(self):
-        if self.__frame_count >= self.__salta_frame - 1:
-            if self.__mano.is_aperta(self.__frame):
+    def attiva_rgb(self):
+        if self.__frame_count > self.__salta_frame:
+            if self.__mano.get_gesto(self.__frame) == "Victory":
                 self.__conta_frame_consecutivi += 1
                 if self.__conta_frame_consecutivi == N_MIN_FRAME_CONSECUTIVI:
                     self.__conta_frame_consecutivi = 0
-                    self.cambia_valore_pausa()
-            else:
+                    self.__colore.cambia_stato_rgb()
                 self.__conta_frame_consecutivi = 0
 
     def cambia_valore_pausa(self):
@@ -122,9 +119,13 @@ class Gioco:
             self.__stato = 1
             return
 
-    def rileva_gesto_palmo(self):
+    def get_gesto(self):
         self.aggiorna_frame()
-        return self.__mano.is_aperta(self.__frame)
+        ritorno = self.__mano.get_gesto(self.__frame)
+        if ritorno == "Victory":
+            self.attiva_rgb()
+        else :
+            return ritorno
 
     def reset_pallina(self):
         self.__pallina.reset()
@@ -154,26 +155,25 @@ class Gioco:
 
     def disegna_fine_partita(self, punteggio_fine_partita):
         if self.__giocatori[0].get_punteggio() == punteggio_fine_partita:
-            scrivi_messaggio("IL GIOCATORE 1 HA VINTO", 40)
+            scrivi_messaggio("IL GIOCATORE 1 HA VINTO", self.__colore)
 
         elif self.__giocatori[1].get_punteggio() == punteggio_fine_partita:
-            scrivi_messaggio("IL GIOCATORE 2 HA VINTO", 40)
+            scrivi_messaggio("IL GIOCATORE 2 HA VINTO", self.__colore)
 
     def disegna(self):
+        self.__colore.aggiorna_rgb()
         n_x, n_y = (get_screen_width() - self.__cam_w) // 2, (get_screen_height() - self.__cam_h) // 2
         # Disegna il contorno del frame
-        draw_rectangle_lines(n_x, n_y, int(self.__cam_w), int(self.__cam_h), WHITE)
+        draw_rectangle_lines(n_x, n_y, int(self.__cam_w), int(self.__cam_h), self.__colore.get_colore())
         # Disegna i punti delle dita
         if len(self.__indici) > 0:
-            draw_circle(int(self.__indici[0][0] * self.__cam_w + n_x),
-                        int(self.__indici[0][1] * self.__cam_h + n_y), 20, RED)
+            draw_circle(int(self.__indici[0][0] * self.__cam_w + n_x), int(self.__indici[0][1] * self.__cam_h + n_y), 20, RED)
         if len(self.__indici) > 1:
-            draw_circle(int(self.__indici[1][0] * self.__cam_w + n_x),
-                        int(self.__indici[1][1] * self.__cam_h + n_y), 20, RED)
+            draw_circle(int(self.__indici[1][0] * self.__cam_w + n_x), int(self.__indici[1][1] * self.__cam_h + n_y), 20, RED)
         for i in range(0, get_screen_height(), 80):
             l = 6
-            draw_rectangle(int((get_screen_width() - l) / 2), i, l, 40, WHITE)
-        self.__pallina.disegna()
+            draw_rectangle(int((get_screen_width() - l) / 2), i, l, 40, self.__colore.get_colore())
+        self.__pallina.disegna(self.__colore)
         self.__giocatori[0].disegna(get_screen_width() * 0.25, 50)
         self.__giocatori[1].disegna(get_screen_width() * 0.75, 50)
 

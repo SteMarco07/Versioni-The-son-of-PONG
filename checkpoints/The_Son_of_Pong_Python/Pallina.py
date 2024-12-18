@@ -5,12 +5,11 @@ import random
 
 class Pallina:
 
-    def __init__(self, raggio, v0, colore, suono):
+    def __init__(self, raggio, v0, suono):
         self.__pos = {"x": 0, "y": 0}
         self.__raggio = raggio
         self.__rimbalzo = True
         self.__v = {"v0": v0, "vx": 0, "vy": 0}
-        self.colore = colore
         self.__suono = suono
 
     def reset(self):
@@ -92,8 +91,8 @@ class Pallina:
         # Aggiorna la posizione orizzontale
         self.__pos["x"] += self.__v["vx"]
 
-    def disegna(self):
-        draw_circle(int(self.__pos["x"]), int(self.__pos["y"]), self.__raggio, self.colore)
+    def disegna(self, colore):
+        draw_circle(int(self.__pos["x"]), int(self.__pos["y"]), self.__raggio, colore.get_colore())
 
     def assegna_punto(self):
         if self.__pos["x"] < 0:

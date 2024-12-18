@@ -36,8 +36,8 @@ class Giocatore:
     def get_barretta(self):
         return self.__barretta
 
-    def disegna(self, x, y):
+    def disegna(self, x, y, colore):
         x = int(x)
         y = int(y)
-        self.__barretta.disegna()
-        draw_text(str(self.__punteggio), int(x), int(y), 30, WHITE)
+        self.__barretta.disegna(colore)
+        draw_text(str(self.__punteggio), int(x), int(y), 30, colore.get_colore())

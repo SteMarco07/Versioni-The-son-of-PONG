@@ -1,19 +1,29 @@
 from pyray import *
 from raylib import *
 import cv2
+#import mediapipe as mp
+from mediapipe.tasks import python
+from mediapipe.tasks.python import vision
 
 import Barretta
 import Pallina
 import Giocatore
 import Gioco
+from Colore import Colore
 
 from Funzioni_Varie import scrivi_messaggio
 
-print("MAIN")
+def carica_modello ():
+    base_options = python.BaseOptions(model_asset_path='file/gesture_recognizer.task')
+    options = vision.GestureRecognizerOptions(base_options=base_options)
+    recognizer = vision.GestureRecognizer.create_from_options(options)
+    return recognizer
 
 init_audio_device()
 
-pallina = Pallina.Pallina(10, 15, WHITE, LoadSound('assets/rimbalzo.wav'.encode('utf-8')))
+colore = Colore(WHITE, False)
+
+pallina = Pallina.Pallina(10, 15, LoadSound('assets/rimbalzo.wav'.encode('utf-8')))
 
 LARGHEZZA_BARRETTA = 20
 ALTEZZA_BARRETTA = 200
@@ -21,13 +31,13 @@ ALTEZZA_BARRETTA = 200
 rimbalzo = load_sound('assets/rimbalzo.wav')
 punto = load_sound('assets/punto.mp3')
 
-barretta1 = Barretta.Barretta(LARGHEZZA_BARRETTA, 200, LARGHEZZA_BARRETTA, ALTEZZA_BARRETTA, 10, WHITE)
-barretta2 = Barretta.Barretta(1920 - LARGHEZZA_BARRETTA - 20, 200, LARGHEZZA_BARRETTA, ALTEZZA_BARRETTA, 10, WHITE)
+barretta1 = Barretta.Barretta(LARGHEZZA_BARRETTA, 200, LARGHEZZA_BARRETTA, ALTEZZA_BARRETTA, 10)
+barretta2 = Barretta.Barretta(1920 - LARGHEZZA_BARRETTA - 20, 200, LARGHEZZA_BARRETTA, ALTEZZA_BARRETTA, 10)
 
 g1 = Giocatore.Giocatore(barretta1, "G1")
 g2 = Giocatore.Giocatore(barretta2, "G2")
 
-gioco = Gioco.Gioco(g1, g2, pallina)
+gioco = Gioco.Gioco(g1, g2, pallina, colore ,carica_modello())
 
 PUNTI_FINALI = 2
 
@@ -48,8 +58,8 @@ while not window_should_close():
 
     match stato:
         case 0:  # si deve ancora selezionare la partita
-            scrivi_messaggio('Apri la mano per iniziare la partita', 50)
-            if gioco.rileva_gesto_palmo() or is_key_pressed(KEY_SPACE):
+            scrivi_messaggio('Apri la mano per iniziare la partita', colore, FONT_SIZE=50)
+            if gioco.get_gesto() == "Open_Palm" or is_key_pressed(KEY_SPACE):
                 gioco.reset_pallina()
                 gioco.set_stato(1)
 
@@ -63,28 +73,26 @@ while not window_should_close():
                 play_sound(punto)
 
         case 2:  # pausa dal giocatore
-            scrivi_messaggio("Il gioco e' in pausa", 40)
+            scrivi_messaggio("Il gioco e' in pausa", colore)
             if is_key_pressed(KEY_P):
                 gioco.cambia_valore_pausa()
-            # gioco.cambia_stato_pausa()
 
         case 3:  # pausa da uno che fa punto
             chi = (gioco.controlla_pallina())
 
             if gioco.qualcuno_sta_per_vincere(chi, PUNTI_FINALI) == -1:
-                scrivi_messaggio("\t\t\tPunto del Giocatore " + str(chi + 1) + '!\n\tApri la mano per continuare', 50)
-                if gioco.rileva_gesto_palmo() or is_key_pressed(KEY_SPACE):
+                scrivi_messaggio("\t\t\tPunto del Giocatore " + str(chi + 1) + '!\n\tApri la mano per continuare', colore, FONT_SIZE = 50)
+                if gioco.get_gesto() == "Open_Palm" or is_key_pressed(KEY_SPACE):
                     gioco.set_stato(1)
                     gioco.reset_pallina()
                     gioco.aggiungi_punto(chi)
-
             else:
                 gioco.set_stato(4)
 
         case 4:  # vittoria di uno dei due giocatori
-            scrivi_messaggio("VITTORIA DEL GI0CATORE " + str(chi + 1) + '!\n\tPremi "R" per resettare oppure apri la mano', 50)
+            scrivi_messaggio("VITTORIA DEL GI0CATORE " + str(chi + 1) + '!\n\tChiudi il pugno per Resettare', colore, FONT_SIZE = 50)
             gioco.reset_pallina()
-            if is_key_pressed(KEY_R) or gioco.rileva_gesto_palmo():
+            if is_key_pressed(KEY_R) or gioco.get_gesto() == "Closed_Fist":
                 gioco.reset()
 
     begin_drawing()

@@ -1,31 +1,37 @@
+import raylib
+from numpy import unsignedinteger
+from raylib import colors
+from raylibpy import WHITE
+
 class Colore:
 
-    def __init__(self, attuale, rgb, custom, rgb_attivo):
-        self.__attuale = attuale
-        self.__rgb = rgb
-        self.__custom = custom
+    def __init__(self, normale, rgb_attivo):
+        self.__normale = normale
+        self.__rgb = WHITE
         self.__rgb_attivo = rgb_attivo
 
-    def set_attuale(self, attuale):
-        self.__attuale = attuale
 
-    def set_rgb(self, rgb):
-        self.__rgb = rgb
+    def get_rgb(self):
+        return self.__rgb
 
-    def set_custom(self, custom):
-        self.__custom = custom
+    def cambia_stato_rgb(self):
+        self.__rgb_attivo = not self.__rgb_attivo
 
-    def attiva_rgb(self):
-        self.__rgb_attivo = True
 
-    def desattiva_rgb(self):
-        self.__rgb_attivo = False
+    def aggiorna_rgb(self, velocita=5):
+        if not self.__rgb_attivo:
+            velocita = -velocita
+        if 0 < self.__rgb.r < 250:
+            self.__rgb.r += velocita
+        elif 0 < self.__rgb.g < 250:
+            self.__rgb.g += velocita
+        elif 0 < self.__rgb.b < 250:
+            self.__rgb.b += velocita
+        else:
+            self.__rgb_attivo = not self.__rgb_attivo
 
     def get_colore(self):
         if self.__rgb_attivo:
-            return self.__attuale
+            return self.__normale
         else:
             return self.__rgb
-
-    def get_custom(self):
-        return self.__custom
