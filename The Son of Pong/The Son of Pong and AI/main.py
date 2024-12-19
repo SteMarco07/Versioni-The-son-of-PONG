@@ -39,7 +39,7 @@ g2 = Giocatore.Giocatore(barretta2, "G2")
 
 gioco = Gioco.Gioco(g1, g2, pallina, colore, carica_modello())
 
-PUNTI_FINALI = 2
+PUNTI_FINALI = 5
 
 set_target_fps(60)
 init_window(0, 0, "test")
@@ -58,7 +58,7 @@ while not window_should_close():
 
     match stato:
         case 0:  # si deve ancora selezionare la partita
-            scrivi_messaggio('Apri la mano per iniziare la partita', colore, FONT_SIZE=50)
+            scrivi_messaggio('Apri la mano per iniziare la partita', gioco.get_colore(), FONT_SIZE=50)
             gesto = gioco.get_gesto()
             if is_key_pressed(KEY_G):
                 gioco.forza_rgb()

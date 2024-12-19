@@ -18,10 +18,10 @@ class Colore:
             'A': 255
         }  # RGB
         self.__rgb_attivo = rgb_attivo
-        self.__velocita = 10
+        self.__velocita = 5
 
-    def get_rgb(self):
-        return self.__rgb
+    def get_stato_rgb(self):
+        return self.__rgb_attivo
 
     def set_rgb_attivi(self):
         self.__rgb_attivo = True

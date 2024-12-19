@@ -11,6 +11,7 @@ class Pallina:
         self.__rimbalzo = True
         self.__v = {"v0": v0, "vx": 0, "vy": 0}
         self.__suono = suono
+        self.__ridizione_iniziale = 0.80
 
     def reset(self):
         self.set_pos(get_screen_width() / 2, get_screen_height() / 2)
@@ -19,14 +20,14 @@ class Pallina:
 
     def reset_vx(self):
         if get_random_value(1, 2) == 1:
-            self.__v["vx"] = - self.__v["v0"]
+            self.__v["vx"] = - self.__v["v0"]*self.__ridizione_iniziale
             self.__rimbalzo = True
         else:
-            self.__v["vx"] = self.__v["v0"]
+            self.__v["vx"] = self.__v["v0"]*self.__ridizione_iniziale
             self.__rimbalzo = False
 
     def reset_vy(self):
-        moltiplicatore = int(self.__v["v0"] * random.randrange(50, 100) / 100)
+        moltiplicatore = int((self.__v["v0"] * random.randrange(50, 100) / 100)*self.__ridizione_iniziale)
         if random.choice([1, 2]) == 1:
             self.__v["vy"] = -moltiplicatore
         else:

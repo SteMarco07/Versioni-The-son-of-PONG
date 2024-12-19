@@ -5,7 +5,7 @@ import cv2 as cv
 import mediapipe.python.solutions.hands as mp_hands
 from Mano import *
 
-N_MIN_FRAME_CONSECUTIVI = 2
+N_MIN_FRAME_CONSECUTIVI = 4
 
 
 class Gioco:
@@ -161,12 +161,12 @@ class Gioco:
     def set_stato(self, stato):
         self.__stato = stato
         if stato == 1:
-            if self.__colore.get_rgb():
+            if self.__colore.get_stato_rgb():
                 self.riprendi("partita_rgb")
             else:
                 self.riprendi("partita")
         elif stato == 2 or stato == 3:
-            if self.__colore.get_rgb():
+            if self.__colore.get_stato_rgb():
                 self.metti_in_pausa("partita_rgb")
             else:
                 self.metti_in_pausa("partita")
@@ -228,7 +228,7 @@ class Gioco:
             if self.__stato == 0:
                 target = "chill"
             elif self.__stato == 1:
-                if self.__colore.get_rgb():
+                if self.__colore.get_stato_rgb():
                     target = "partita_rgb"
                 else:
                     target = "partita"
