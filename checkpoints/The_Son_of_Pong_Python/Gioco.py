@@ -11,7 +11,6 @@ N_MIN_FRAME_CONSECUTIVI = 2
 class Gioco:
     def __init__(self, g1, g2, pallina, colore, modello):
         self.__indici = []
-        self.__fatto_una_volta = None
         self.__musiche = None
         self.__giocatori = [g1, g2]
         self.__pallina = pallina
@@ -162,9 +161,15 @@ class Gioco:
     def set_stato(self, stato):
         self.__stato = stato
         if stato == 1:
-            self.riprendi("partita")
+            if self.__colore.get_rgb():
+                self.riprendi("partita_rgb")
+            else:
+                self.riprendi("partita")
         elif stato == 2 or stato == 3:
-            self.metti_in_pausa("partita")
+            if self.__colore.get_rgb():
+                self.metti_in_pausa("partita_rgb")
+            else:
+                self.metti_in_pausa("partita")
 
     def disegna_fine_partita(self, punteggio_fine_partita):
         if self.__giocatori[0].get_punteggio() == punteggio_fine_partita:
@@ -200,6 +205,7 @@ class Gioco:
         self.__musiche = {
             "chill": load_sound('assets/chill.mp3'),
             "partita": load_sound('assets/partita.mp3'),
+            "partita_rgb" : load_sound('assets/rgb.mp3'),
             "vittoria": load_sound('assets/vittoria.mp3'),
             "punto": load_sound('assets/punto.mp3')
         }
@@ -222,8 +228,10 @@ class Gioco:
             if self.__stato == 0:
                 target = "chill"
             elif self.__stato == 1:
-                target = "partita"
-                self.__fatto_una_volta = False
+                if self.__colore.get_rgb():
+                    target = "partita_rgb"
+                else:
+                    target = "partita"
             else:
                 target = "vittoria"
             self.__gestisci_musiche(target)
@@ -239,3 +247,7 @@ class Gioco:
 
     def get_frame_count(self):
         return self.__frame_count
+
+    def forza_rgb(self):
+        self.__colore.set_rgb_attivi()
+        print("ATTIVO")

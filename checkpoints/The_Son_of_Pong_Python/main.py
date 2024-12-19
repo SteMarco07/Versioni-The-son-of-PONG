@@ -60,6 +60,8 @@ while not window_should_close():
         case 0:  # si deve ancora selezionare la partita
             scrivi_messaggio('Apri la mano per iniziare la partita', colore, FONT_SIZE=50)
             gesto = gioco.get_gesto()
+            if is_key_pressed(KEY_G):
+                gioco.forza_rgb()
             if gesto == "Open_Palm" or is_key_pressed(KEY_SPACE):
                 gioco.reset_pallina()
                 gioco.set_stato(1)
