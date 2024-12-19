@@ -1,14 +1,12 @@
 from pyray import *
-from raylib import KEY_G
-
+from raylib import KEY_G, KEY_H
 from Funzioni_Varie import scrivi_messaggio
 import cv2 as cv
 import mediapipe.python.solutions.hands as mp_hands
 from Mano import *
-from Colore import Colore
 
+N_MIN_FRAME_CONSECUTIVI = 2
 
-N_MIN_FRAME_CONSECUTIVI = 12
 
 class Gioco:
     def __init__(self, g1, g2, pallina, colore, modello):
@@ -122,7 +120,6 @@ class Gioco:
         else:
             self.__conta_frame_consecutivi = 0
 
-
     def cambia_valore_pausa(self):
         if self.__stato == 1:
             self.__stato = 2
@@ -183,9 +180,15 @@ class Gioco:
         draw_rectangle_lines(n_x, n_y, int(self.__cam_w), int(self.__cam_h), self.__colore.get_colore())
         # Disegna i punti delle dita
         if len(self.__indici) > 0:
-            draw_circle(int(self.__indici[0][0] * self.__cam_w + n_x), int(self.__indici[0][1] * self.__cam_h + n_y), 20, RED)
+            draw_circle(int(self.__indici[0][0] * self.__cam_w + n_x), int(self.__indici[0][1] * self.__cam_h + n_y),
+                        20, BLACK)
+            draw_circle(int(self.__indici[0][0] * self.__cam_w + n_x), int(self.__indici[0][1] * self.__cam_h + n_y),
+                        15, RED)
         if len(self.__indici) > 1:
-            draw_circle(int(self.__indici[1][0] * self.__cam_w + n_x), int(self.__indici[1][1] * self.__cam_h + n_y), 20, RED)
+            draw_circle(int(self.__indici[1][0] * self.__cam_w + n_x), int(self.__indici[1][1] * self.__cam_h + n_y),
+                        20, BLACK)
+            draw_circle(int(self.__indici[1][0] * self.__cam_w + n_x), int(self.__indici[1][1] * self.__cam_h + n_y),
+                        15, RED)
         for i in range(0, get_screen_height(), 80):
             l = 6
             draw_rectangle(int((get_screen_width() - l) / 2), i, l, 40, self.__colore.get_colore())
@@ -225,6 +228,9 @@ class Gioco:
                 target = "vittoria"
             self.__gestisci_musiche(target)
 
+    def get_colore_invertito(self):
+        return self.__colore.get_colore_invertito()
+
     def metti_in_pausa(self, key):
         pause_sound(self.__musiche[key])
 
@@ -233,6 +239,3 @@ class Gioco:
 
     def get_frame_count(self):
         return self.__frame_count
-
-    def get_colore(self):
-        return self.__colore

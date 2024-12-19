@@ -1,6 +1,5 @@
 import mediapipe as mp
 
-from Funzioni_Varie import *
 
 class Mano:
     def __init__(self, modello):
@@ -8,7 +7,6 @@ class Mano:
         self.recognizer = modello
 
     def get_gesto(self, frame):
-
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=frame)
         recognition_result = self.recognizer.recognize(mp_image)
 

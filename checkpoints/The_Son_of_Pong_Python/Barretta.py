@@ -11,7 +11,6 @@ class Barretta:
         }
         self.__v = v
 
-
     def set_x(self, x):
         self.__rec[x] = x
 

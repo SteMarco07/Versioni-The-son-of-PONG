@@ -1,31 +1,27 @@
-import raylib
-from numpy import unsignedinteger
-from raylib import colors
-
+from random import randint
 
 
 class Colore:
 
-    def __init__(self, normale, rgb_attivo):
+    def __init__(self, rgb_attivo=False):
         self.__normale = {
-            'r' : 255,
-            'g' : 255,
-            'b' : 255,
-            'A' : 255
-        } #BIANCO
+            'r': 255,
+            'g': 255,
+            'b': 255,
+            'A': 255
+        }  # BIANCO
+        value = randint(50, 205)
         self.__rgb = {
-            'r' : 255,
-            'g' : 255,
-            'b' : 255,
-            'A' : 255
-        } #RGB
+            'r': value,
+            'g': value,
+            'b': value,
+            'A': 255
+        }  # RGB
         self.__rgb_attivo = rgb_attivo
         self.__velocita = 10
 
-
     def get_rgb(self):
         return self.__rgb
-
 
     def set_rgb_attivi(self):
         self.__rgb_attivo = True
@@ -43,10 +39,26 @@ class Colore:
                         return
             self.__velocita = -self.__velocita
 
-
     def get_colore(self):
         if not self.__rgb_attivo:
             return tuple(self.__normale.values())
         else:
-            print(f"{tuple(self.__rgb.values())}  V = {self.__velocita}")
+            # print(f"{tuple(self.__rgb.values())}  V = {self.__velocita}")
             return tuple(self.__rgb.values())
+
+    def get_colore_invertito(self):
+        if not self.__rgb_attivo:
+            new_color = {
+                'r': 255 - self.__normale['r'],
+                'g': 255 - self.__normale['g'],
+                'b': 255 - self.__normale['b'],
+                'A': 255
+            }
+        else:
+            new_color = {
+                'r': 255 - self.__rgb['r'],
+                'g': 255 - self.__rgb['g'],
+                'b': 255 - self.__rgb['b'],
+                'A': 255
+            }
+        return tuple(new_color.values())
