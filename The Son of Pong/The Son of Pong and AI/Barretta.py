@@ -1,5 +1,4 @@
-from pyray import *
-
+from raylibpy import *
 
 class Barretta:
     def __init__(self, x, y, l, h, v):

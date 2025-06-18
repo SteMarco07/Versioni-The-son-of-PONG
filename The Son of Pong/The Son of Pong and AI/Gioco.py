@@ -1,5 +1,4 @@
-from pyray import *
-from raylib import KEY_G, KEY_H
+from raylibpy import *
 from Funzioni_Varie import scrivi_messaggio
 import cv2 as cv
 import mediapipe.python.solutions.hands as mp_hands

@@ -1,5 +1,4 @@
-from raylib import *
-from pyray import *
+from raylibpy import *
 
 
 class Giocatore:

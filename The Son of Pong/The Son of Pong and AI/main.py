@@ -1,5 +1,4 @@
-from pyray import *
-from raylib import *
+from raylibpy import *
 import cv2
 # import mediapipe as mp
 from mediapipe.tasks import python

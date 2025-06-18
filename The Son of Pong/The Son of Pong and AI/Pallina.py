@@ -1,5 +1,5 @@
 import math
-from pyray import *
+from raylibpy import *
 import random
 
 

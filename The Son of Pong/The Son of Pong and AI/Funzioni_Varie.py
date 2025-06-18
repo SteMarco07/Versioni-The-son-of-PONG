@@ -1,4 +1,4 @@
-from pyray import *
+from raylibpy import *
 
 
 def scrivi_messaggio(messaggio, colore, FONT_SIZE=40):
