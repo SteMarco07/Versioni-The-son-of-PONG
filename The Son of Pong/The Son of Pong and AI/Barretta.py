@@ -1,4 +1,4 @@
-from raylibpy import *
+from raylib import *
 
 class Barretta:
     def __init__(self, x, y, l, h, v):
@@ -36,11 +36,11 @@ class Barretta:
         y = int(self.__rec["y"])
         l = int(self.__rec["l"])
         h = int(self.__rec["h"])
-        draw_rectangle(x, y, l, h, colore)
+        DrawRectangle(x, y, l, h, colore)
 
     def aggiorna_x(self, limite1, limite2, tasto_destra, tasto_sinistra):
         x = self.__rec["x"]
-        if is_key_down(tasto_sinistra) and limite1 <= x <= limite2:
+        if IsKeyDown(tasto_sinistra) and limite1 <= x <= limite2:
             self.__rec["x"] -= self.__v
-        elif is_key_down(tasto_destra) and limite1 <= x <= limite2:
+        elif IsKeyDown(tasto_destra) and limite1 <= x <= limite2:
             self.__rec["x"] += self.__v

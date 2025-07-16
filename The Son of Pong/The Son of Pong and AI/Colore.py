@@ -1,6 +1,5 @@
 from random import randint
 
-
 class Colore:
 
     def __init__(self, rgb_attivo=False):

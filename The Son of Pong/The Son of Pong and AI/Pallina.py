@@ -1,5 +1,5 @@
 import math
-from raylibpy import *
+from raylib import *
 import random
 
 
@@ -14,12 +14,12 @@ class Pallina:
         self.__ridizione_iniziale = 0.80
 
     def reset(self):
-        self.set_pos(get_screen_width() / 2, get_screen_height() / 2)
+        self.set_pos(GetScreenWidth() / 2, GetScreenHeight() / 2)
         self.reset_vx()
         self.reset_vy()
 
     def reset_vx(self):
-        if get_random_value(1, 2) == 1:
+        if GetRandomValue(1, 2) == 1:
             self.__v["vx"] = - self.__v["v0"]*self.__ridizione_iniziale
             self.__rimbalzo = True
         else:
@@ -49,10 +49,10 @@ class Pallina:
     def aggiorna_y(self, screen_height):
         if self.__pos["y"] - self.__raggio <= 0:
             self.__v["vy"] = abs(self.__v["vy"])
-            play_sound(self.__suono)
+            PlaySound(self.__suono)
         elif self.__pos["y"] + self.__raggio >= screen_height:
             self.__v["vy"] = -self.__v["vy"]
-            play_sound(self.__suono)
+            PlaySound(self.__suono)
 
         self.__pos["y"] += self.__v["vy"]
 
@@ -75,17 +75,17 @@ class Pallina:
     def __aggiorna(self, barretta, direzione):
         self.__pos["x"] += direzione
         self.__calcola_rimbalzo(barretta)
-        play_sound(self.__suono)
+        PlaySound(self.__suono)
 
     def aggiorna_x(self, barretta1, barretta2):
         # Rileva collisioni con le barrette
 
         rec1 = tuple(barretta1.get_rettangolo().values())
         rec2 = tuple(barretta2.get_rettangolo().values())
-        if check_collision_circle_rec(self.get_pos(), self.__raggio, rec1) and self.__rimbalzo:
+        if CheckCollisionCircleRec(self.get_pos(), self.__raggio, rec1) and self.__rimbalzo:
             self.__aggiorna(barretta1, 10)
             self.__rimbalzo = False
-        elif check_collision_circle_rec(self.get_pos(), self.__raggio, rec2) and not self.__rimbalzo:
+        elif CheckCollisionCircleRec(self.get_pos(), self.__raggio, rec2) and not self.__rimbalzo:
             self.__aggiorna(barretta2, -10)
             self.__rimbalzo = True
 
@@ -93,12 +93,12 @@ class Pallina:
         self.__pos["x"] += self.__v["vx"]
 
     def disegna(self, colore):
-        draw_circle(int(self.__pos["x"]), int(self.__pos["y"]), self.__raggio, colore.get_colore())
+        DrawCircle(int(self.__pos["x"]), int(self.__pos["y"]), self.__raggio, colore.get_colore())
 
     def assegna_punto(self):
         if self.__pos["x"] < 0:
             return 1
-        elif self.__pos["x"] > get_screen_width():
+        elif self.__pos["x"] > GetScreenWidth():
             return 0
         else:
             return -1

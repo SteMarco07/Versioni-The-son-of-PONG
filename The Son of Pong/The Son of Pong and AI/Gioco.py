@@ -1,4 +1,5 @@
-from raylibpy import *
+
+from raylib import *
 from Funzioni_Varie import scrivi_messaggio
 import cv2 as cv
 import mediapipe.python.solutions.hands as mp_hands
@@ -71,14 +72,14 @@ class Gioco:
 
             self.__indici.sort()
 
-            if (len(self.__indici) > 0 and 0 < self.__indici[0][1] * get_screen_height() - altezza1 / 2 and
-                    self.__indici[0][1] * get_screen_height() + altezza1 / 2 < get_screen_height()):
-                self.__v_barretta_1 = int((self.__indici[0][1] * get_screen_height() - altezza1 / 2 - self.__giocatori[
+            if (len(self.__indici) > 0 and 0 < self.__indici[0][1] * GetScreenHeight() - altezza1 / 2 and
+                    self.__indici[0][1] * GetScreenHeight() + altezza1 / 2 < GetScreenHeight()):
+                self.__v_barretta_1 = int((self.__indici[0][1] * GetScreenHeight() - altezza1 / 2 - self.__giocatori[
                     0].get_barretta().get_y()) / self.__salta_frame)
 
-            if (len(self.__indici) > 1 and 0 < self.__indici[1][1] * get_screen_height() - altezza2 / 2 and
-                    self.__indici[1][1] * get_screen_height() + altezza2 / 2 < get_screen_height()):
-                self.__v_barretta_2 = int((self.__indici[1][1] * get_screen_height() - altezza1 / 2 - self.__giocatori[
+            if (len(self.__indici) > 1 and 0 < self.__indici[1][1] * GetScreenHeight() - altezza2 / 2 and
+                    self.__indici[1][1] * GetScreenHeight() + altezza2 / 2 < GetScreenHeight()):
+                self.__v_barretta_2 = int((self.__indici[1][1] * GetScreenHeight() - altezza1 / 2 - self.__giocatori[
                     1].get_barretta().get_y()) / self.__salta_frame)
 
     def aggiungi_punto(self, indice):
@@ -96,19 +97,19 @@ class Gioco:
         barretta1 = self.__giocatori[0].get_barretta()
         barretta2 = self.__giocatori[1].get_barretta()
 
-        self.__pallina.aggiorna_y(get_screen_height())
+        self.__pallina.aggiorna_y(GetScreenHeight())
         self.__pallina.aggiorna_x(barretta1, barretta2)
 
         self.__frame_count += 1
 
     def attiva_rgb(self):
-        if self.__mano.get_gesto(self.__frame) == "Thumb_Up" or is_key_down(KEY_G):
+        if self.__mano.get_gesto(self.__frame) == "Thumb_Up" or IsKeyDown(KEY_G):
             self.__conta_frame_consecutivi += 1
             if self.__conta_frame_consecutivi >= N_MIN_FRAME_CONSECUTIVI:
                 self.__conta_frame_consecutivi = 0
                 self.__colore.set_rgb_attivi()
                 print("RGB ATTIVATI")
-        elif self.__mano.get_gesto(self.__frame) == "Thumb_Down" or is_key_down(KEY_H):
+        elif self.__mano.get_gesto(self.__frame) == "Thumb_Down" or IsKeyDown(KEY_H):
             self.__conta_frame_consecutivi += 1
             if self.__conta_frame_consecutivi >= N_MIN_FRAME_CONSECUTIVI:
                 self.__conta_frame_consecutivi = 0
@@ -179,42 +180,42 @@ class Gioco:
 
     def disegna(self):
         self.__colore.aggiorna_rgb()
-        n_x, n_y = (get_screen_width() - self.__cam_w) // 2, (get_screen_height() - self.__cam_h) // 2
+        n_x, n_y = (GetScreenWidth() - self.__cam_w) // 2, (GetScreenHeight() - self.__cam_h) // 2
         # Disegna il contorno del frame
-        draw_rectangle_lines(n_x, n_y, int(self.__cam_w), int(self.__cam_h), self.__colore.get_colore())
+        DrawRectangleLines(n_x, n_y, int(self.__cam_w), int(self.__cam_h), self.__colore.get_colore())
         # Disegna i punti delle dita
         if len(self.__indici) > 0:
-            draw_circle(int(self.__indici[0][0] * self.__cam_w + n_x), int(self.__indici[0][1] * self.__cam_h + n_y),
+            DrawCircle(int(self.__indici[0][0] * self.__cam_w + n_x), int(self.__indici[0][1] * self.__cam_h + n_y),
                         20, BLACK)
-            draw_circle(int(self.__indici[0][0] * self.__cam_w + n_x), int(self.__indici[0][1] * self.__cam_h + n_y),
+            DrawCircle(int(self.__indici[0][0] * self.__cam_w + n_x), int(self.__indici[0][1] * self.__cam_h + n_y),
                         15, RED)
         if len(self.__indici) > 1:
-            draw_circle(int(self.__indici[1][0] * self.__cam_w + n_x), int(self.__indici[1][1] * self.__cam_h + n_y),
+            DrawCircle(int(self.__indici[1][0] * self.__cam_w + n_x), int(self.__indici[1][1] * self.__cam_h + n_y),
                         20, BLACK)
-            draw_circle(int(self.__indici[1][0] * self.__cam_w + n_x), int(self.__indici[1][1] * self.__cam_h + n_y),
+            DrawCircle(int(self.__indici[1][0] * self.__cam_w + n_x), int(self.__indici[1][1] * self.__cam_h + n_y),
                         15, RED)
-        for i in range(0, get_screen_height(), 80):
+        for i in range(0, GetScreenHeight(), 80):
             l = 6
-            draw_rectangle(int((get_screen_width() - l) / 2), i, l, 40, self.__colore.get_colore())
+            DrawRectangle(int((GetScreenWidth() - l) / 2), i, l, 40, self.__colore.get_colore())
         self.__pallina.disegna(self.__colore)
-        self.__giocatori[0].disegna(get_screen_width() * 0.25, 50, self.__colore.get_colore())
-        self.__giocatori[1].disegna(get_screen_width() * 0.75, 50, self.__colore.get_colore())
+        self.__giocatori[0].disegna(GetScreenWidth() * 0.25, 50, self.__colore.get_colore())
+        self.__giocatori[1].disegna(GetScreenWidth() * 0.75, 50, self.__colore.get_colore())
 
     def carica_musica(self):
         self.__musiche = {
-            "chill": load_sound('assets/chill.mp3'),
-            "partita": load_sound('assets/partita.mp3'),
-            "partita_rgb" : load_sound('assets/rgb.mp3'),
-            "vittoria": load_sound('assets/vittoria.mp3'),
-            "punto": load_sound('assets/punto.mp3')
+            "chill": LoadSound("assets/chill.mp3".encode('utf-8')),
+            "partita": LoadSound("assets/partita.mp3".encode('utf-8')),
+            "partita_rgb": LoadSound("assets/rgb.mp3".encode('utf-8')),
+            "vittoria": LoadSound("assets/vittoria.mp3".encode('utf-8')),
+            "punto": LoadSound("assets/punto.mp3".encode('utf-8'))
         }
 
     def __gestisci_musiche(self, target):
         for key, OST in self.__musiche.items():
-            if is_sound_playing(OST) and key != target:
-                stop_sound(OST)
-        if not is_sound_playing(self.__musiche[target]):
-            play_sound(self.__musiche[target])
+            if IsSoundPlaying(OST) and key != target:
+                StopSound(OST)
+        if not IsSoundPlaying(self.__musiche[target]):
+            PlaySound(self.__musiche[target])
 
     def qualcuno_sta_per_vincere(self, chi, PUNTI_FINALI):
         if self.__giocatori[chi].sta_per_vincere(PUNTI_FINALI):
@@ -239,10 +240,10 @@ class Gioco:
         return self.__colore.get_colore_invertito()
 
     def metti_in_pausa(self, key):
-        pause_sound(self.__musiche[key])
+        PauseSound(self.__musiche[key])
 
     def riprendi(self, key):
-        resume_sound(self.__musiche[key])
+        ResumeSound(self.__musiche[key])
 
     def get_frame_count(self):
         return self.__frame_count
