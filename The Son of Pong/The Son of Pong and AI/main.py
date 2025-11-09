@@ -11,6 +11,7 @@ import Gioco
 from Colore import Colore
 from Funzioni_Varie import scrivi_messaggio
 
+InitAudioDevice()
 
 def carica_modello():
     base_options = python.BaseOptions(model_asset_path='file/gesture_recognizer.task')
@@ -20,8 +21,10 @@ def carica_modello():
 
 colore = Colore()
 
+
+
 pallina = Pallina.Pallina(10, 15, LoadSound("assets/rimbalzo.wav".encode('utf-8')))
-InitAudioDevice()
+
 
 LARGHEZZA_BARRETTA = 20
 ALTEZZA_BARRETTA = 200
@@ -41,6 +44,7 @@ PUNTI_FINALI = 5
 
 SetTargetFPS(60)
 InitWindow(0, 0, b"The Son of Pong")
+
 ToggleFullscreen()
 
 gioco.carica_musica()
@@ -106,6 +110,6 @@ while not WindowShouldClose():
     ClearBackground(gioco.get_colore_invertito())
 
     EndDrawing()
-    CloseAudioDevice()
-
+    
+CloseAudioDevice()
 CloseWindow()

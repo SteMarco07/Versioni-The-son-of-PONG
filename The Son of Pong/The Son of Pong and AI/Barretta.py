@@ -11,7 +11,7 @@ class Barretta:
         self.__v = v
 
     def set_x(self, x):
-        self.__rec[x] = x
+        self.__rec["x"] = x
 
     def set_y(self, y):
         self.__rec["y"] = y
